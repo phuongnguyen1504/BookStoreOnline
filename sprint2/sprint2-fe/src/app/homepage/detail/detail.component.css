@@ -1,0 +1,23 @@
+@media only screen and (min-width: 992px) {
+  .body_section{
+    margin-top: 150px;
+
+
+    -webkit-transition: all 250ms ease-out;
+    -o-transition: all 250ms ease-out;
+    transition: all 250ms ease-out;
+    color: #000000;
+  }
+
+}
+@media only screen and (max-width: 992px) {
+  .body_section {
+    margin-top: 75px;
+
+
+    -webkit-transition: all 250ms ease-out;
+    -o-transition: all 250ms ease-out;
+    transition: all 250ms ease-out;
+    color: #000000;
+  }
+}

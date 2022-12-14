@@ -1,0 +1,84 @@
+.modal-backdrop.fade.show  {
+  z-index: -1;
+}
+.modal.show .modal-dialog {
+position: relative;
+  left:-20%;
+  top:10%;
+}
+.modal-dialog .modal-body {
+  padding: 0;
+}
+.modal-content{
+  position: relative;
+  width: 1000px;
+  border-radius: 10px;
+}
+.close-modal{
+  position: relative;
+}
+.close:hover{
+  background: red;
+  opacity: 1;
+}
+.close-img {
+  position: absolute;
+  right: -31px;
+  top: -8px;
+  width: 42px;
+  height: 42px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 3;
+
+}
+.img-modal {
+  background: linear-gradient(136deg, rgb(240, 248, 255) -1%, rgb(219, 238, 255) 85%);
+  border-radius: 0.3rem;
+}
+.form-login {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+.img-modal img{
+  top:10px;
+  width: 70%;
+  transform: translate(25%,5%);
+}
+.content{
+  text-align: center;
+  margin-top: 20px;
+}
+
+/*custom*/
+.rememberMe {
+  /*display: flex;*/
+  /*justify-content: space-between;*/
+  /*align-items: center;*/
+}
+
+input[type=checkbox] {
+  transform: scale(0.5);
+}
+
+.btn{
+  display: block;
+  width: 100%;
+  height: 50px;
+  border-radius: 25px;
+  outline: none;
+  border: none;
+  background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
+  background-size: 200%;
+  font-size: 1.2rem;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  text-transform: uppercase;
+  margin: 1rem 0;
+  cursor: pointer;
+  transition: .5s;
+}
+.btn:hover{
+  background-position: right;
+}

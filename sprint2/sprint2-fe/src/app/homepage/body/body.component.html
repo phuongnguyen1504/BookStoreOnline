@@ -1,0 +1,52 @@
+<section class="body_section">
+  <!--  <div class="">-->
+  <!--    <div slickContainer #slickController="slick" [slickConfig]="config">-->
+  <!--      <ng-container *ngIf="slickController.initialize">-->
+  <!--        -->
+  <!--      </ng-container>-->
+
+  <!--    </div>-->
+  <!--  </div>-->
+  <div class="slider-area bg-gray-10">
+    <div class="container">
+      <div>
+
+        <div slickContainer #slickController="slick" [slickConfig]="config"
+             class="hero-slider-active-2 nav-style-1 nav-style-1-modify-2 nav-style-1-orange">
+          <ng-container *ngIf="slickController.initialize">
+            <div class="single-hero-slider single-hero-slider-hm10 single-animation-wrap" slickItem
+                 *ngFor="let item of banner">
+              <div class="row slider-animated-1">
+                <div class="col-lg-5 col-md-5 col-12 col-sm-12">
+                  <div class="hero-slider-content-6 slider-content-hm9 slider-content-hm10">
+                    <h5 class="animated">Best Seller</h5>
+                    <h1 class="animated">new ipad pro <br>& phone x</h1>
+                    <p class="animated">Prodctect your house with home secure wifi camere indoor/outdoor</p>
+                    <div class="btn-style-1">
+                      <a class="animated btn-1-padding-4 btn-1-orange btn-1-font-14" href="product-details.html">Explore
+                        Now</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-7 col-md-7 col-12 col-sm-12">
+                  <div class="hm10-hero-slider-img">
+                    <img class="animated" src="{{item}}" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+
+
+</section>
+<app-listbook></app-listbook>
+<app-introduce></app-introduce>
+<app-feature></app-feature>
+<app-contact></app-contact>

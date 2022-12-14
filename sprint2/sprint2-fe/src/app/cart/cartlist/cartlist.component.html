@@ -1,0 +1,27 @@
+<section class="shop_section layout_padding mt-1 mb-60">
+<div class="container">
+    <h3>Shopping Cart</h3>
+    <ul *ngFor="let item of cartItems;index as i">
+      <li class="">
+        <div class="">
+          <a href="#"><img src="{{item.book.img_url}}" alt=""></a>
+        </div>
+        <div class="">
+          <h4><a href="#">Simple Black T-Shirt {{item.book.name}}</a></h4>
+          <span> {{item.quantity}} × ${{item.book.price}}	</span>
+        </div>
+        <div class="">
+          <a href="#">×</a>
+        </div>
+      </li>
+    </ul>
+    <div class="">
+      <h4>Subtotal: <span>${{totalPrice}}</span></h4>
+    </div>
+    <div class="cart-checkout-btn">
+      <a class="btn-hover cart-btn-style" href="cart.html">view cart</a>
+      <a class="no-mrg btn-hover cart-btn-style" href="checkout.html">checkout</a>
+
+    </div>
+  </div>
+</section>

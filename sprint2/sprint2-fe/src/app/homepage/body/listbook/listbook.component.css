@@ -1,0 +1,264 @@
+.shop_section .heading_container {
+  margin-bottom: 20px;
+}
+
+.shop_section .box {
+  /*background-color: #faf9fa;*/
+  position: relative;
+  padding: 10px 15px;
+  margin-top: 25px;
+  border-radius: 15px;
+  /*overflow: hidden;*/
+}
+
+.shop_section .box a {
+  color: #000000;
+}
+
+.shop_section .box .img-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 15px 30px;
+  height: 245px;
+}
+
+.shop_section .box .img-box img {
+  max-width: 100%;
+  max-height: 211px;
+}
+
+.shop_section .box .detail-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+/*.shop_section .box .detail-box h6 span {*/
+/*  color: #3b4a6b;*/
+/*  font-weight: 600;*/
+/*}*/
+
+/*.shop_section .box .new {*/
+/*  padding: 7px 15px;*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  background-color: #f0d43a;*/
+/*  color: #ffffff;*/
+/*  display: -webkit-box;*/
+/*  display: -ms-flexbox;*/
+/*  display: flex;*/
+/*  -webkit-box-pack: center;*/
+/*  -ms-flex-pack: center;*/
+/*  justify-content: center;*/
+/*  -webkit-box-align: center;*/
+/*  -ms-flex-align: center;*/
+/*  align-items: center;*/
+/*  font-size: 15px;*/
+/*}*/
+
+.shop_section .btn-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-top: 45px;
+}
+
+.shop_section .btn-box a {
+  display: inline-block;
+  padding: 10px 50px;
+  background-color: #f0d43a;
+  color: #ffffff;
+  border-radius: 5px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border: 1px solid #f0d43a;
+}
+
+.shop_section .btn-box a:hover {
+  color: #ffffff;
+  -webkit-transform: translateY(-3px);
+  transform: translateY(-3px);
+}
+
+.card{
+  background-color: transparent;
+  border: transparent;
+  position: relative;
+  overflow: hidden;
+width: 250px;
+  height: 250px;
+  /*padding: 10px 15px;*/
+  margin-top: 25px;
+  border-radius: 15px;
+}
+.card:before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 20px;
+  background: url(http://nhanam.com.vn/Content/images/bg_pattern.jpg);
+  clip-path: circle(150px at 80% 20%);
+  transition: 0.5s ease-in-out;
+}
+.card:hover:before{
+  clip-path: circle(300px at 80% -10%);
+}
+.card:after{
+  content: 'Book';
+  position: absolute;
+  margin: 20px;
+  top: 30%;
+  left: -20%;
+  font-size: 12em;
+  font-weight: 800;
+  font-style: italic;
+  color: rgba(255,255,25,0.05)
+}
+.card .imgBx{
+  position: absolute;
+  /*top: 50%;*/
+  transform: translateY(50%);
+  z-index: 100;
+  width: 100%;
+  /*height: 290px;*/
+  transition: 0.5s;
+}
+.card:hover .imgBx{
+  top: 0%;
+  transform: translateY(10%);
+
+}
+.card .imgBx img{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 250px;
+}
+.card .contentBx{
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  transition: 1s;
+  z-index: 100000;
+}
+.card:hover .contentBx{
+  background-color: transparent;
+  padding: 0;
+  left: -25px;
+  right: 0;
+  top: 80px;
+  bottom:0;
+  height: 250px;
+  width: 250px;
+}
+.card:hover .contentBx p{
+  position: relative;
+  /*font-weight: 600;*/
+  /*letter-spacing: 1px;*/
+  color: black;
+  margin: 0;
+  visibility: visible;
+}
+.card .contentBx p{
+  position: relative;
+  /*font-weight: 600;*/
+  /*letter-spacing: 1px;*/
+  color: black;
+  margin: 0;
+  visibility: hidden;
+}
+.card .contentBx .size,.card .contentBx .color{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 20px;
+  transition: 0.5s;opacity: 0;
+  visibility: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.card:hover .contentBx .size{
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.5s;
+}
+.card:hover .contentBx .color{
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.6s;
+}
+.card .contentBx .size h3, .card .contentBx .color h3{
+  color: #fff;
+  font-weight: 300;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-right: 10px;
+}
+.card .contentBx .size span{
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  line-height: 26px;
+  font-size: 14px;
+  display: inline-block;
+  color: #111;
+  background: #fff;
+  margin: 0 5px;
+  transition: 0.5s;
+  color: #111;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.card .contentBx .size span:hover{
+  background: #9bdc28;
+}
+.card .contentBx .color span{
+  width: 20px;
+  height: 20px;
+  background: #ff0;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.card .contentBx a{
+  display: inline-block;
+  padding: 10px 20px;
+  background: #fff;
+  border-radius: 4px;
+  margin-top: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #111;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: 0.5s;
+  margin-top: 0;
+}
+.card:hover .contentBx a{
+  opacity: 1;
+  transform: translateY(0px);
+  transition-delay: 0.75s;
+
+}

@@ -1,0 +1,77 @@
+<!-- Modal -->
+
+<div class="modal fade" id="login" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="close-modal">
+        <img #closebutton data-dismiss="modal" aria-label="Close" class="close-img"
+             src="https://salt.tikicdn.com/ts/upload/fe/20/d7/6d7764292a847adcffa7251141eb4730.png" aria-hidden="true"
+             alt="icon">
+
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-6 siginout">
+            <form class="form-login" method="post" #flg="ngForm" [formGroup]="formLogin" (ngSubmit)="login()"
+                  appFocusInvalidInput>
+              <h2 class="title">Xin Chao</h2>
+              <div class="input-div username">
+                <div class="i">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="div">
+                  <input type="text" class="input" formControlName="username" placeholder="Tên tài khoản">
+                  <div *ngIf="username.invalid && (username.touched || flg.submitted)" class="text-danger message">
+                    <div *ngIf="username.errors?.required">
+                      Tên tài khoản không được để trống.
+                    </div>
+                    <div *ngIf="username.errors?.pattern">
+                      Tên tài khoản không được chứa ký tự đặc biệt.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="input-div pass">
+                <div class="i">
+                  <i class="fas fa-lock"></i>
+                </div>
+                <div class="div">
+                  <input type="password" class="input" formControlName="password" placeholder="Mật khẩu">
+                  <div *ngIf="password.invalid && (password.touched || flg.submitted)" class="text-danger message">
+                    <div *ngIf="password.errors?.required">
+                      Mật khẩu không được để trống.
+                    </div>
+                  </div>
+                </div>
+              </div>
+<!--              <div class="forgotAndRememberPass">-->
+<!--                <div class="rememberMe">-->
+<!--                  <input type="checkbox" formControlName="rememberMe"><span>Nhớ mật khẩu</span>-->
+<!--                </div>-->
+<!--                &lt;!&ndash;        routerLink="/authen/forgot-password"&ndash;&gt;-->
+
+<!--              </div>-->
+<!--              <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer">-->
+<!--                Quên mật khẩu?-->
+<!--              </a>-->
+              <input type="submit" class="btn" value="Đăng nhập">
+              <div *ngIf="error" class="text-danger message">
+                <div *ngIf="password.errors?.required">
+                  Tên đăng nhập hoặc Mật khẩu không đúng.
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-6 img-modal">
+            <img src="https://salt.tikicdn.com/ts/upload/eb/f3/a3/25b2ccba8f33a5157f161b6a50f64a60.png">
+            <div class="content">
+              <h4>Mua sam tai day</h4>
+              <span>Sieu uu dai moi ngay</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal end -->
