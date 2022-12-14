@@ -79,10 +79,7 @@
                     <li><a href="/">Trang chủ</a></li>
                     <li><a href="#">Danh mục sách<i class="icon-arrow-down"></i> </a>
                       <ul class="sub-menu-style">
-                        <li><a href="about-us.html">Văn học Việt Nam</a></li>
-                        <li><a href="cart.html">Văn học nước ngoài</a></li>
-                        <li><a href="checkout.html">Truyện tranh </a></li>
-                        <li><a href="my-account.html">Sách giáo khoa</a></li>
+                        <li *ngFor="let category of listCategory;index as i"><a [routerLink]="['/category',category.id]">{{category.name}}</a></li>
                       </ul>
                     </li>
                     <li><a href="blog.html">Chính sách khuyến mãi </a></li>
@@ -145,10 +142,7 @@
                 <ul class="dropdown">
                   <li class="menu-item-has-children"><a href="#">Products Layout</a>
                     <ul class="dropdown">
-                      <li><a href="about-us.html">Văn học Việt Nam</a></li>
-                      <li><a href="cart.html">Văn học nước ngoài</a></li>
-                      <li><a href="checkout.html">Truyện tranh </a></li>
-                      <li><a href="my-account.html">Sách giáo khoa</a></li>
+                      <li *ngFor="let item of listCategory;index as i"><a [routerLink]="['/category',item.id]">{{item.name}}</a></li>
                     </ul>
                   </li>
                 </ul>

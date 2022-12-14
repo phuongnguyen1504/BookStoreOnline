@@ -12,6 +12,7 @@ public interface IBookRepository extends JpaRepository<Book,Long> {
     Page<Book> findByCategory(Long id, Pageable pageable);
 //
     Page<Book> findBookByAuthor(String author, Pageable pageable);
-//
-//    Page<Book> search(String concat, Pageable pageable);
+@Query(value = "select * from book join category on `book`.`category_id` = `category`.`id` where `book`.`name` like ?1" +
+        "or `book`.`author` like ?1 or `category`.`name` like ?1",nativeQuery = true)
+    Page<Book> search(String concat, Pageable pageable);
 }

@@ -12,10 +12,11 @@ import { ContactComponent } from './body/contact/contact.component';
 import {ShareModule} from "../share/share.module";
 import {NgxSlickJsModule} from "ngx-slickjs";
 import {FormsModule} from "@angular/forms";
+import { CategoryListComponent } from './category-list/category-list.component';
 
 
 @NgModule({
-  declarations: [HomepageComponent, BodyComponent, DetailComponent, ListbookComponent, IntroduceComponent, FeatureComponent, ContactComponent],
+  declarations: [HomepageComponent, BodyComponent, DetailComponent, ListbookComponent, IntroduceComponent, FeatureComponent, ContactComponent, CategoryListComponent],
     imports: [
         CommonModule,
         HomepageRoutingModule,

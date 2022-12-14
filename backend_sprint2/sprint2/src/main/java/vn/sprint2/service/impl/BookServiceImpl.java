@@ -43,9 +43,9 @@ public class BookServiceImpl implements IBookService {
     public Page<Book> findByCategory(Long id, Pageable pageable) {
         return bookRepository.findByCategory(id,pageable);
     }
-//
-//    @Override
-//    public Page<Book> search(String q, Pageable pageable) {
-//            return bookRepository.search("%".concat(q).concat("%"), pageable);
-//    }
+
+    @Override
+    public Page<Book> search(String q, Pageable pageable) {
+            return bookRepository.search("%".concat(q).concat("%"), pageable);
+    }
 }

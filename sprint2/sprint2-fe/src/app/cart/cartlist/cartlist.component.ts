@@ -26,7 +26,7 @@ export class CartlistComponent implements OnInit {
     if(this.tokenStorageService.isLogin()){
       return this.cartService.getCartByUsername(this.tokenStorageService.getUser().username).subscribe(data=>{
         this.cartItems =data;
-        console.log("listcart"+data);
+        console.log(this.cartItems);
         this.calcTotalPrice();
       })
     }
@@ -37,4 +37,19 @@ export class CartlistComponent implements OnInit {
     this.cartItems.forEach(c=> this.totalPrice+=(c.book.price*c.quantity));
   }
 
+  subQuantity(cartId: any, bookId: any) {
+
+  }
+
+  addQuantity(cartId: any, bookId: any) {
+
+  }
+
+  deleteCartItem(cartId: any, bookId: any) {
+
+  }
+
+  changeQuantity(cartId: any, bookId: any, i: number) {
+
+  }
 }

@@ -91,9 +91,9 @@ public class BookController {
         return new ResponseEntity<>(bookService.findByCategory(id, pageable), HttpStatus.OK);
     }
 
-//    @GetMapping("/search")
-//    public ResponseEntity<Page<Book>> search(@SortDefault(sort = "yearPublish", direction = Sort.Direction.DESC) @RequestParam String q, @PageableDefault(value = 12) Pageable pageable) {
-//        return new ResponseEntity<>(bookService.search(q, pageable), HttpStatus.OK);
-//    }
+    @GetMapping("/search")
+    public ResponseEntity<Page<Book>> search(@SortDefault(sort = "yearPublish", direction = Sort.Direction.DESC) @RequestParam String q, @PageableDefault(value = 12) Pageable pageable) {
+        return new ResponseEntity<>(bookService.search(q, pageable), HttpStatus.OK);
+    }
 
 }

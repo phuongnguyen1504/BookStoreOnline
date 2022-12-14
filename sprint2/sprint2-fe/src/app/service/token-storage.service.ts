@@ -40,6 +40,6 @@ export class TokenStorageService {
   }
 
   saveLogin() {
-    window.sessionStorage.getItem(LOGIN_KEY);
+    window.sessionStorage.setItem(LOGIN_KEY, String(true));
   }
 }

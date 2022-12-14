@@ -19,6 +19,6 @@ public interface IBookService {
 //
     Page<Book> findByCategory(Long id, Pageable pageable);
 //
-//    Page<Book> search(String q, Pageable pageable);
+    Page<Book> search(String q, Pageable pageable);
 }
 

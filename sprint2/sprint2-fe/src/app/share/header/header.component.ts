@@ -4,6 +4,7 @@ import {ShareService} from '../../service/share.service';
 import {Router} from '@angular/router';
 import {AuthService} from "../../service/auth/auth.service";
 import {CartService} from "../../service/cart.service";
+import {CategoryService} from "../../service/category.service";
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,8 @@ export class HeaderComponent implements OnInit {
   username: string;
   role: string;
   visible: boolean;
-  constructor(private  tokenStorageService: TokenStorageService, private cartService:CartService,
+  listCategory: any;
+  constructor(private  tokenStorageService: TokenStorageService, private cartService:CartService,private categoryService: CategoryService,
               private shareService: ShareService, private route: Router, private authService: AuthService) {
     this.shareService.getClickEvent().subscribe(() => {
       this.loadHeader();
@@ -23,6 +25,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.categoryService.findAll().subscribe(data=>{
+      this.listCategory=data;
+
+    },error => {console.log(error)})
     this.loadHeader();
   }
 
