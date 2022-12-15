@@ -44,8 +44,8 @@ export class BookService {
 
   }
 
-  getBookByQuery(page, sort, size, searchValue) {
-    return this.http.get<any[]>(apiUrl+'/search/?q='+searchValue+'&page='+page+'&sort='+sort+'&size='+size);
-    console.log(apiUrl+'category/'+searchValue+'?page='+page+'&sort='+sort+'&size='+size);
+  getBookByQuery(page, searchValue) {
+    return this.http.get<any[]>(apiUrl+'/search?q='+searchValue+'&page='+page);
+    console.log(apiUrl+'/search?q='+searchValue+'&page='+page);
   }
 }

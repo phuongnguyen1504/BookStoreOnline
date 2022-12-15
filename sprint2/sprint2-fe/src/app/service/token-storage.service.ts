@@ -38,7 +38,9 @@ export class TokenStorageService {
     window.sessionStorage.setItem(CART_ID,cartId);
 
   }
-
+  getCartId() {
+    return Number.parseInt(window.sessionStorage.getItem(CART_ID));
+  }
   saveLogin() {
     window.sessionStorage.setItem(LOGIN_KEY, String(true));
   }

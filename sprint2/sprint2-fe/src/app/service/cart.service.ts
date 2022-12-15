@@ -13,4 +13,8 @@ export class CartService {
   getCartByUsername(username):Observable<any> {
     return this.http.get<any>(api_cart+'/getCartByUsername?username='+username);
   }
+
+  addToCart(cartId: number, bookId, quantity: number) {
+    return this.http.get<any>(api_cart + '/addToCart?cartId=' + cartId + '&bookId=' + bookId + '&amount=' + quantity);
+  }
 }

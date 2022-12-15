@@ -20,12 +20,12 @@ export class SearchComponent implements OnInit {
   constructor(private bookService:BookService,private activatedRoute: ActivatedRoute, private route: Router) {
     this.activatedRoute.queryParams.subscribe(p => {
       this.searchValue = p.q;
-      this.getBookByQuery(this.indexPagination,this.sort,this.size,this.searchValue);
+      this.getBookByQuery(this.indexPagination,this.searchValue);
     });
   }
 
   ngOnInit(): void {
-    this.getBookByQuery(this.indexPagination,this.sort,this.size,this.searchValue);
+    this.getBookByQuery(this.indexPagination,this.searchValue);
     console.log(this.books);
     this.quantity=1;
   }
@@ -68,18 +68,18 @@ export class SearchComponent implements OnInit {
 
   onSelected(value: number) {
     this.size=value;
-    this.getBookByQuery(this.indexPagination,this.sort,this.size,this.searchValue);
+    this.getBookByQuery(this.indexPagination,this.searchValue);
     this.goToPage(0,this.size);
   }
 
   onSort(value: string) {
     this.sort=value;
-    this.getBookByQuery(this.indexPagination,this.sort,this.size,this.searchValue);
+    this.getBookByQuery(this.indexPagination,this.searchValue);
 
 
   }
-  getBookByQuery(page, sort, size, searchValue){
-    this.bookService.getBookByQuery(page,sort,size,searchValue).subscribe(data=>{
+  getBookByQuery(page, searchValue){
+    this.bookService.getBookByQuery(page,searchValue).subscribe(data=>{
       this.books=data;
       console.log(data);
     })
@@ -91,7 +91,7 @@ export class SearchComponent implements OnInit {
     this.indexPagination = pageNumber;
     console.log("size"+this.size);
     console.log("page"+this.indexPagination);
-    this.getBookByQuery(this.indexPagination,this.sort,sizeNumber,this.searchValue);
+    this.getBookByQuery(this.indexPagination,this.searchValue);
   }
 
   goToNextOrPreviousPage(direction, size) {
