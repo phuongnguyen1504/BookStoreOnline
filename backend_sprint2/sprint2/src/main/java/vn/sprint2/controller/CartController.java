@@ -57,5 +57,35 @@ public class CartController {
         }
         return new ResponseEntity<>(new ResponseMessage("Thêm sản phẩm thành công"), HttpStatus.OK);
     }
-
+    @DeleteMapping("/{cartId}/{bookId}")
+    public ResponseEntity<ResponseMessage> deleteCartItem(@PathVariable Long cartId, @PathVariable Long bookId) {
+        Optional<CartItem> cartItemOptional = cartItemService.findById(cartId, bookId);
+        if (!cartItemOptional.isPresent()) {
+            return new ResponseEntity<>(new ResponseMessage("Không tồn tại hàng của bạn"), HttpStatus.BAD_REQUEST);
+        }
+        int numberCartDelete = cartItemService.deleteCartItem(cartId, bookId);
+        if (numberCartDelete <= 0) {
+            return new ResponseEntity<>(new ResponseMessage("Cập nhật giỏ hàng không thành công"), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new ResponseMessage("Cập nhật giỏ hàng thành công"), HttpStatus.OK);
+    }
+    @GetMapping("/updateCartItem")
+    public ResponseEntity<ResponseMessage> updateCartItem(@RequestParam Long cartId, @RequestParam Long bookId, @RequestParam int amount) {
+        Optional<Book> bookOptional = bookService.findById(bookId);
+        if (!bookOptional.isPresent()) {
+            return new ResponseEntity<>(new ResponseMessage("Sách không tồn tại."), HttpStatus.BAD_REQUEST);
+        }
+        if (bookOptional.get().getAmount() < amount) {
+            return new ResponseEntity<>(new ResponseMessage("Kho hàng hiện tại không đủ số lượng yêu cầu."), HttpStatus.BAD_REQUEST);
+        }
+        Optional<CartItem> cartItemOptional = cartItemService.findById(cartId, bookId);
+        if (!cartItemOptional.isPresent()) {
+            return new ResponseEntity<>(new ResponseMessage("Không tìm thấy giỏ hàng."), HttpStatus.BAD_REQUEST);
+        }
+        int numberCartUpdate = cartItemService.update(amount, LocalDateTime.now(), cartId, bookId);
+        if (numberCartUpdate <= 0) {
+            return new ResponseEntity<>(new ResponseMessage("Cập nhật giỏ hàng không thành công"), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new ResponseMessage("Cập nhật giỏ hàng thành công"), HttpStatus.OK);
+    }
 }

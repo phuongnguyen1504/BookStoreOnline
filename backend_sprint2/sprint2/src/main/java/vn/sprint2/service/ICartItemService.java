@@ -20,4 +20,6 @@ public interface ICartItemService {
     int update(int i, LocalDateTime now, Long cartId, Long bookId);
 
     int getnumberOfCart(String username);
+
+    int deleteCartItem(Long cartId, Long bookId);
 }

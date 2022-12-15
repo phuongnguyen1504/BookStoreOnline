@@ -35,4 +35,8 @@ public interface ICartItemRepository extends JpaRepository<CartItem,Long>{
     @Modifying
     @Query(value = "update cart_item set quantity = ? , date_add = ? where cart_id = ? and book_id = ?", nativeQuery = true)
     int update(int amount, LocalDateTime dateAdd, Long cartId, Long bookId);
+    @Transactional
+    @Modifying
+    @Query(value = "delete from cart_item where cart_id = ? and book_id = ?", nativeQuery = true)
+    int deleteCartItem(Long cartId, Long bookId);
 }

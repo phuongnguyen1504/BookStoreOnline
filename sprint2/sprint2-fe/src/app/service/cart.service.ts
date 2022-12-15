@@ -20,4 +20,10 @@ export class CartService {
   addToCart(cartId: number, bookId, quantity: number) {
     return this.http.get<any>(api_cart + '/addToCart?cartId=' + cartId + '&bookId=' + bookId + '&amount=' + quantity);
   }
+  deleteCartItem(cartId, bookId): Observable<any> {
+    return this.http.delete<any>(api_cart + '/' + cartId + '/' + bookId);
+  }
+  updateCartItem(cartId, bookId, amount): Observable<any>{
+    return this.http.get<any>(api_cart + '/updateCartItem?cartId=' + cartId + '&bookId=' + bookId + '&amount=' + amount);
+  }
 }

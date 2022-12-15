@@ -43,5 +43,10 @@ public class CartItemServiceImpl implements ICartItemService {
         return cartItemRepository.getnumberOfCart(username);
     }
 
+    @Override
+    public int deleteCartItem(Long cartId, Long bookId) {
+        return cartItemRepository.deleteCartItem(cartId, bookId);
+    }
+
 
 }
