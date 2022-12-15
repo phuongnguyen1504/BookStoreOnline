@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
   visible: boolean;
   listCategory: any;
   formSearch: FormGroup;
+  amountOfCart: number=0;
   constructor(private  tokenStorageService: TokenStorageService, private cartService:CartService,private categoryService: CategoryService,
               private shareService: ShareService, private route: Router, private authService: AuthService, private toastrService: ToastrService) {
     this.shareService.getClickEvent().subscribe(() => {
@@ -43,6 +44,9 @@ export class HeaderComponent implements OnInit {
       this.listCart();
       this.username = this.tokenStorageService.getUser().roles[0].name;
       this.isLoggedIn = true;
+      this.cartService.getNumberOfCart(this.tokenStorageService.getUser().username).subscribe(data=>{
+        this.amountOfCart=data;
+      },error => {console.log(error)})
       // this.cartValue = c
 
     } else {
@@ -57,6 +61,7 @@ export class HeaderComponent implements OnInit {
       extendedTimeOut: 1500,
       progressBar: true
     });
+    this.amountOfCart=0;
     this.route.navigateByUrl('');
   }
   toggleCollapse() {

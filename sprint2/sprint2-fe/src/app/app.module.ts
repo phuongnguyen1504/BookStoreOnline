@@ -14,6 +14,7 @@ import {JwtInterceptor} from "./helpers/jwt-interceptor";
 import {CartModule} from "./cart/cart.module";
 import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 import {ToastrModule} from "ngx-toastr";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {ToastrModule} from "ngx-toastr";
       HttpClientModule,
       ToastrModule.forRoot(),
         BrowserModule,
+      BrowserAnimationsModule,
         AppRoutingModule,
         ShareModule
     ],

@@ -64,7 +64,7 @@
               <div class="header-action header-action-flex" [hidden]="!isLoggedIn">
                 <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
                   <a class="cart-active" (click)="listCart()" routerLink="/cart">
-                    <i  class="fa-solid fa-cart-shopping"></i><span class="pro-count black">1</span>
+                    <i  class="fa-solid fa-cart-shopping"></i><span class="pro-count black">{{amountOfCart}}</span>
                     <span class="cart-amount white"></span>
                   </a>
                 </div>

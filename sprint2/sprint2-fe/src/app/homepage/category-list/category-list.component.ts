@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {BookService} from "../../service/book.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
+import {CartService} from "../../service/cart.service";
+import {TokenStorageService} from "../../service/token-storage.service";
+import {ToastrService} from "ngx-toastr";
+import {ShareService} from "../../service/share.service";
 
 @Component({
   selector: 'app-category-list',
@@ -17,7 +21,8 @@ export class CategoryListComponent implements OnInit {
   numberOfModal:number;
   size=5;
   sort="book.name";
-  constructor(private bookService:BookService,private activatedRoute: ActivatedRoute, private route: Router) {
+  constructor(private bookService:BookService,private activatedRoute: ActivatedRoute, private route: Router,private cartService: CartService,
+              private  tokenStorageService:TokenStorageService, private toastrService:ToastrService,private shareService: ShareService) {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       this.id = +paramMap.get('id');
       this.getBookByCategory(this.indexPagination,this.sort,this.size,this.id);
@@ -101,4 +106,18 @@ export class CategoryListComponent implements OnInit {
     this.goToPage(direction === 'forward' ? this.indexPagination + 1 : this.indexPagination - 1, size);
   }
 
+  addToCart(bookId: any) {
+    if (this.tokenStorageService.isLogin()) {
+      const cartId = this.tokenStorageService.getCartId();
+      this.cartService.addToCart(cartId, bookId, this.quantity).subscribe(
+        data => {
+          this.toastrService.success(data.message, 'Thông báo');
+          this.shareService.sendClickEvent();
+        }, error => {
+          this.toastrService.warning(error.error.message, 'Thông báo');
+        }
+      )
+    }
+  }
 }
+

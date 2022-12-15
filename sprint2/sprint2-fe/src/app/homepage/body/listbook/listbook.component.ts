@@ -3,6 +3,9 @@ import {BookService} from "../../../service/book.service";
 import {ToastrService} from "ngx-toastr";
 import {FormBuilder} from "@angular/forms";
 import {Book} from "../../../model/book";
+import {CartService} from "../../../service/cart.service";
+import {TokenStorageService} from "../../../service/token-storage.service";
+import {ShareService} from "../../../service/share.service";
 
 @Component({
   selector: 'app-listbook',
@@ -17,7 +20,8 @@ export class ListbookComponent implements OnInit {
   numberOfModal:number;
   size=5;
   sort="name";
-  constructor(private bookService:BookService) { }
+  constructor(private bookService:BookService,private cartService: CartService,
+              private  tokenStorageService:TokenStorageService, private toastrService:ToastrService,private shareService: ShareService) { }
 
   ngOnInit(): void {
     this.getBook(this.indexPagination,this.sort,this.size);
@@ -96,4 +100,18 @@ export class ListbookComponent implements OnInit {
     this.goToPage(direction === 'forward' ? this.indexPagination + 1 : this.indexPagination - 1, size);
   }
 
+  addToCart(bookId: any) {
+    if (this.tokenStorageService.isLogin()) {
+      const cartId = this.tokenStorageService.getCartId();
+      this.cartService.addToCart(cartId, bookId, this.quantity).subscribe(
+        data => {
+          this.toastrService.success(data.message, 'Thông báo');
+          this.shareService.sendClickEvent();
+        }, error => {
+          this.toastrService.warning(error.error.message, 'Thông báo');
+        }
+      )
+    }
+  }
 }
+
