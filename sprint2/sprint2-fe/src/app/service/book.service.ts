@@ -38,4 +38,14 @@ export class BookService {
     console.log(apiUrl+'?page='+page+'&sort='+sort+'&size='+size);
 
   }
+  getBookByCategory(page: number, sort: any,size:any,id:any) {
+    return this.http.get<any[]>(apiUrl+'/category/'+id+'?page='+page+'&sort='+sort+'&size='+size);
+    console.log(apiUrl+'category/'+id+'?page='+page+'&sort='+sort+'&size='+size);
+
+  }
+
+  getBookByQuery(page, sort, size, searchValue) {
+    return this.http.get<any[]>(apiUrl+'/search/?q='+searchValue+'&page='+page+'&sort='+sort+'&size='+size);
+    console.log(apiUrl+'category/'+searchValue+'?page='+page+'&sort='+sort+'&size='+size);
+  }
 }

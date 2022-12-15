@@ -13,28 +13,25 @@
               <div class="categori-search-wrap categori-search-wrap-modify-2">
                 <div class="categori-style-1">
                   <select class="nice-select nice-select-style-1">
-                    <option>All Categories</option>
-                    <option>Clothing</option>
-                    <option>T-Shirt</option>
-                    <option>Shoes</option>
-                    <option>Jeans</option>
+                    <option>Tên sách</option>
+
                   </select>
                 </div>
                 <div class="search-wrap-3">
-                  <!--                  <form action="#">-->
-                  <!--                    <input placeholder="Search Products..." type="text">-->
-                  <!--                    <button class="orange"><i class="lnr lnr-magnifier"></i></button>-->
-                  <!--                  </form>-->
+                  <form [formGroup]="formSearch" (ngSubmit)="onSearch()">
+                    <input placeholder="Tìm kiếm sách..." type="text" formControlName="searchValue">
+                    <button class="orange" type="submit"><i class="lnr lnr-magnifier"></i></button>
+                  </form>
                 </div>
               </div>
             </div>
-            <div class="col-xl-2 col-lg-2">
+            <div class="col-xl-3 col-lg-3">
               <div class="header-action header-action-flex">
                 <div [hidden]="isLoggedIn"
                      class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
                   <a data-toggle="modal" data-target="#login" (click)="HideCollapse()"><i
                     class="icon-user"></i><span
-                    class="cart-amount white">LogIn/Register</span></a>
+                    class="cart-amount white">Đăng kí/Đăng nhập</span></a>
                 </div>
                 <div [hidden]="!isLoggedIn"
                      class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
@@ -54,12 +51,21 @@
 
               </div>
             </div>
-            <div class="col-xl-2 col-lg-2">
-              <div class="header-action header-action-flex">
+            <div class="col-xl-1 col-lg-1">
+              <div class="header-action header-action-flex" [hidden]="isLoggedIn">
+                <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
+                  <a class="cart-active" (click)="listCart()" data-toggle="modal" data-target="#login">
+                    <i class="fa-solid fa-cart-shopping"></i>
+<!--                    <span class="pro-count black"></span>-->
+                    <span class="cart-amount white"></span>
+                  </a>
+                </div>
+              </div>
+              <div class="header-action header-action-flex" [hidden]="!isLoggedIn">
                 <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
                   <a class="cart-active" (click)="listCart()" routerLink="/cart">
-                    <i class="fa-solid fa-cart-shopping"></i><span class="pro-count black">02</span>
-                    <span class="cart-amount white">$2,435.30</span>
+                    <i  class="fa-solid fa-cart-shopping"></i><span class="pro-count black">1</span>
+                    <span class="cart-amount white"></span>
                   </a>
                 </div>
               </div>

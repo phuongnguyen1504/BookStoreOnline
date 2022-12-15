@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {ShareService} from '../../../service/share.service';
 import {UserService} from '../../../service/user.service';
 import {AuthService} from '../../../service/auth/auth.service';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private authService: AuthService,
               private userService: UserService,
-              private shareService: ShareService) { }
+              private shareService: ShareService,private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.formLogin = this.formBuilder.group({
@@ -47,6 +48,11 @@ export class LoginComponent implements OnInit {
               this.error=false;
               this.closebutton.nativeElement.click();
               this.shareService.sendClickEvent();
+            this.toastrService.success('', 'Đăng nhập thành công', {
+              timeOut: 2000,
+              extendedTimeOut: 1500,
+              progressBar: true
+            })
               this.router.navigateByUrl('');
             }
           );
@@ -54,6 +60,11 @@ export class LoginComponent implements OnInit {
         err => {
           this.authService.isLoggedIn = false;
           this.error=true;
+          this.toastrService.error('Tên đăng nhập hoặc tài khoản không đúng', 'Đăng nhập thất bại: ', {
+            timeOut: 2000,
+            extendedTimeOut: 1500,
+            progressBar: true
+          });
         }
       );
     }

@@ -1,5 +1,19 @@
 <!-- shop section -->
 <section class="shop_section layout_padding mt-1 mb-60">
+  <div class="breadcrumb-area bg-gray">
+    <div class="container">
+      <div class="breadcrumb-content text-center">
+        <ul>
+          <li>
+            <a routerLink="/home">Trang chủ</a>
+          </li>
+          <li class="active">
+            Tất cả sách
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
   <div class="container">
     <div class="shop-topbar-wrapper">
       <div class="shop-topbar-left">
@@ -7,7 +21,7 @@
           <a class="active" href="#shop-1" data-toggle="tab"><i class="icon-grid"></i></a>
           <a href="#shop-2" data-toggle="tab"><i class="icon-menu"></i></a>
         </div>
-        <p>Showing 1 - 20 of 30 results </p>
+        <p>Showing {{books.numberOfElements}} of {{books.totalElements}} results </p>
       </div>
       <div class="product-sorting-wrapper">
         <div class="product-shorting shorting-style">
@@ -58,7 +72,7 @@
                   </div>
                   <h3><a href="product-details.html">{{book.name}}</a></h3>
                   <div class="product-price-2">
-                    <span>${{book.price}}</span>
+                    <span>${{book.price| currency : 'VNĐ' : '' : '1.0-0'}}</span>
                   </div>
                 </div>
                 <div class="product-content-wrap-2 product-content-position text-center">
@@ -74,7 +88,7 @@
                   </div>
                   <h3><a href="product-details.html">{{book.name}}</a></h3>
                   <div class="product-price-2">
-                    <span>${{book.price}}</span>
+                    <span>${{book.price| currency : 'VNĐ' : '' : '1.0-0'}}</span>
                   </div>
                   <div class="pro-add-to-cart">
                     <button title="Add to Cart">Add To Cart</button>
@@ -120,8 +134,8 @@
                 <div class="shop-list-content">
                   <h3><a href="product-details.html">{{book.name}}</a></h3>
                   <div class="pro-list-price">
-                    <span class="new-price">${{book.price}}</span>
-                    <span class="old-price">${{book.price}}</span>
+                    <span class="new-price">${{book.price| currency : 'VNĐ' : '' : '1.0-0'}}</span>
+                    <span class="old-price">${{book.price| currency : 'VNĐ' : '' : '1.0-0'}}</span>
                   </div>
                   <div class="product-list-rating-wrap">
                     <div class="product-list-rating">
@@ -222,8 +236,8 @@
                 </div>
                 <p>{{bookfind.description}}</p>
                 <div class="pro-details-price">
-                  <span class="new-price">${{bookfind.price}}</span>
-                  <span class="old-price">${{bookfind.price}}</span>
+                  <span class="new-price">${{bookfind.price| currency : 'VNĐ' : '' : '1.0-0'}}</span>
+                  <span class="old-price">${{bookfind.price| currency : 'VNĐ' : '' : '1.0-0'}}</span>
                 </div>
                 <div class="pro-details-quality">
                   <span>Quantity:</span>

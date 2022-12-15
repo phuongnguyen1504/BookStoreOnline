@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 import {AuthService} from "../../service/auth/auth.service";
 import {CartService} from "../../service/cart.service";
 import {CategoryService} from "../../service/category.service";
+import {ToastrService} from "ngx-toastr";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-header',
@@ -17,14 +19,18 @@ export class HeaderComponent implements OnInit {
   role: string;
   visible: boolean;
   listCategory: any;
+  formSearch: FormGroup;
   constructor(private  tokenStorageService: TokenStorageService, private cartService:CartService,private categoryService: CategoryService,
-              private shareService: ShareService, private route: Router, private authService: AuthService) {
+              private shareService: ShareService, private route: Router, private authService: AuthService, private toastrService: ToastrService) {
     this.shareService.getClickEvent().subscribe(() => {
       this.loadHeader();
     });
   }
 
   ngOnInit(): void {
+    this.formSearch = new FormGroup({
+      searchValue: new FormControl()
+    })
     this.categoryService.findAll().subscribe(data=>{
       this.listCategory=data;
 
@@ -46,6 +52,11 @@ export class HeaderComponent implements OnInit {
   logOut() {
     this.tokenStorageService.logOut();
     this.ngOnInit();
+    this.toastrService.success('Đăng xuất thành công', 'Thông báo', {
+      timeOut: 2000,
+      extendedTimeOut: 1500,
+      progressBar: true
+    });
     this.route.navigateByUrl('');
   }
   toggleCollapse() {
@@ -64,5 +75,9 @@ export class HeaderComponent implements OnInit {
 
   listCart() {
 
+  }
+
+  onSearch() {
+    this.route.navigateByUrl("/search?q=" + this.formSearch.get('searchValue').value + '&page=0');
   }
 }

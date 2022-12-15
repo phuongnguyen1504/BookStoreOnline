@@ -3,13 +3,13 @@ import {BookService} from "../../service/book.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 
 @Component({
-  selector: 'app-category-list',
-  templateUrl: './category-list.component.html',
-  styleUrls: ['./category-list.component.css']
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
 })
-export class CategoryListComponent implements OnInit {
-
+export class SearchComponent implements OnInit {
   indexPagination = 0;
+  searchValue = "";
   id:number;
   books:any;
   bookfind:any;
@@ -18,14 +18,14 @@ export class CategoryListComponent implements OnInit {
   size=5;
   sort="book.name";
   constructor(private bookService:BookService,private activatedRoute: ActivatedRoute, private route: Router) {
-    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      this.id = +paramMap.get('id');
-      this.getBookByCategory(this.indexPagination,this.sort,this.size,this.id);
-    })
+    this.activatedRoute.queryParams.subscribe(p => {
+      this.searchValue = p.q;
+      this.getBookByQuery(this.indexPagination,this.sort,this.size,this.searchValue);
+    });
   }
 
   ngOnInit(): void {
-    this.getBookByCategory(this.indexPagination,this.sort,this.size,this.id);
+    this.getBookByQuery(this.indexPagination,this.sort,this.size,this.searchValue);
     console.log(this.books);
     this.quantity=1;
   }
@@ -68,18 +68,18 @@ export class CategoryListComponent implements OnInit {
 
   onSelected(value: number) {
     this.size=value;
-    this.getBookByCategory(this.indexPagination,this.sort,this.size,this.id);
+    this.getBookByQuery(this.indexPagination,this.sort,this.size,this.searchValue);
     this.goToPage(0,this.size);
   }
 
   onSort(value: string) {
     this.sort=value;
-    this.getBookByCategory(this.indexPagination,this.sort,this.size,this.id);
+    this.getBookByQuery(this.indexPagination,this.sort,this.size,this.searchValue);
 
 
   }
-  getBookByCategory(page,sort,size,id){
-    this.bookService.getBookByCategory(page,sort,size,id).subscribe(data=>{
+  getBookByQuery(page, sort, size, searchValue){
+    this.bookService.getBookByQuery(page,sort,size,searchValue).subscribe(data=>{
       this.books=data;
       console.log(data);
     })
@@ -91,7 +91,7 @@ export class CategoryListComponent implements OnInit {
     this.indexPagination = pageNumber;
     console.log("size"+this.size);
     console.log("page"+this.indexPagination);
-    this.getBookByCategory(this.indexPagination,this.sort,sizeNumber,this.id);
+    this.getBookByQuery(this.indexPagination,this.sort,sizeNumber,this.searchValue);
   }
 
   goToNextOrPreviousPage(direction, size) {
