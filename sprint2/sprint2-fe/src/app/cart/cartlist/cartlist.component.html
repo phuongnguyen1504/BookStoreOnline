@@ -35,7 +35,7 @@
                   </td>
                   <td class="product-subtotal price">{{cartItem.book.price * cartItem.quantity | currency : 'VNĐ' : '' : '1.0-0'}} đ</td>
                   <td class="product-remove">
-                    <a (click)="deleteCartItem(cartItem?.cart.id, cartItem?.book.id)"><i class="icon_close"></i></a>
+                    <a (click)="deleteCartItem(cartItem?.cart.id, cartItem?.book.id)"><i class="fa-regular fa-trash-can"></i></a>
                   </td>
                 </tr>
                 </tbody>
@@ -59,38 +59,36 @@
             <div class="col-lg-4 col-md-6">
               <div class="cart-tax">
                 <div class="title-wrap">
-                  <h4 class="cart-bottom-title section-bg-gray">Estimate Shipping And Tax</h4>
+                  <h4 class="cart-bottom-title section-bg-gray">Đo lường phí giao hàng</h4>
                 </div>
                 <div class="tax-wrapper">
-                  <p>Enter your destination to get a shipping estimate.</p>
+                  <p>Nhập địa chỉ điểm đến.</p>
                   <div class="tax-select-wrapper">
                     <div class="tax-select">
                       <label>
-                        * Country
+                        * Tỉnh/thành
                       </label>
                       <select class="email s-email s-wid">
-                        <option>Bangladesh</option>
-                        <option>Albania</option>
-                        <option>Åland Islands</option>
-                        <option>Afghanistan</option>
-                        <option>Belgium</option>
+                        <option>Hà Nội</option>
+                        <option>Hồ Chí Minh</option>
+                        <option>Đà Nẵng</option>
+                        <option>Cần Thơ</option>
                       </select>
                     </div>
                     <div class="tax-select">
                       <label>
-                        * Region / State
+                        * Điểm đến
                       </label>
                       <select class="email s-email s-wid">
-                        <option>Bangladesh</option>
-                        <option>Albania</option>
-                        <option>Åland Islands</option>
-                        <option>Afghanistan</option>
-                        <option>Belgium</option>
+                        <option>Hà Nội</option>
+                        <option>Hồ Chí Minh</option>
+                        <option>Đà Nẵng</option>
+                        <option>Cần Thơ</option>
                       </select>
                     </div>
                     <div class="tax-select">
                       <label>
-                        * Zip/Postal Code
+                        * Địa chỉ
                       </label>
                       <input type="text">
                     </div>
@@ -102,13 +100,13 @@
             <div class="col-lg-4 col-md-6">
               <div class="discount-code-wrapper">
                 <div class="title-wrap">
-                  <h4 class="cart-bottom-title section-bg-gray">Use Coupon Code</h4>
+                  <h4 class="cart-bottom-title section-bg-gray">Mã giảm giá</h4>
                 </div>
                 <div class="discount-code">
-                  <p>Enter your coupon code if you have one.</p>
+                  <p>Nhập mã giảm giá tại đây.</p>
                   <form>
                     <input type="text" required="" name="name">
-                    <button class="cart-btn-2" type="submit">Apply Coupon</button>
+                    <button class="cart-btn-2" type="submit">Nhập</button>
                   </form>
                 </div>
               </div>
@@ -116,14 +114,14 @@
             <div class="col-lg-4 col-md-12">
               <div class="grand-totall">
                 <div class="title-wrap">
-                  <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
+                  <h4 class="cart-bottom-title section-bg-gary-cart">Giỏ hàng</h4>
                 </div>
                 <h5>Tổng tiền: <span>{{totalPrice | currency : 'VNĐ' : '' : '1.0-0'}} đ</span></h5>
                 <div class="total-shipping">
-                  <h5>Total shipping</h5>
+                  <h5>Tổng phí vận chuyển</h5>
                   <ul>
-                    <li><input type="checkbox"> Standard <span>$20.00</span></li>
-                    <li><input type="checkbox"> Express <span>$30.00</span></li>
+                    <li><input type="checkbox" (click)="addShing(25000)"> Standard <span>25.000 đ</span></li>
+                    <li><input type="checkbox"> Express <span>50.000 đ</span></li>
                   </ul>
                 </div>
                 <h4 class="grand-totall-title">Tổng thanh toán: <span>{{totalPrice | currency : 'VNĐ' : '' : '1.0-0'}} đ</span></h4>

@@ -43,12 +43,12 @@ public class CartController {
         int numberCartAdd = 0;
         if (!cartItemOptional.isPresent()) {
             if (bookOptional.get().getAmount() < amount) {
-                return new ResponseEntity<>(new ResponseMessage("Kho hàng hiện tại không đủ số lượng yêu cầu."), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new ResponseMessage("Hiện tại không đủ số lượng hàng quý khách yêu cầu."), HttpStatus.BAD_REQUEST);
             }
             numberCartAdd = cartItemService.addToCart(amount, LocalDateTime.now(), cartId, bookId);
         } else {
             if (bookOptional.get().getAmount() < cartItemOptional.get().getQuantity() + amount) {
-                return new ResponseEntity<>(new ResponseMessage("Kho hàng hiện tại không đủ số lượng yêu cầu."), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new ResponseMessage("Hiện tại không đủ số lượng hàng quý khách yêu cầu."), HttpStatus.BAD_REQUEST);
             }
             numberCartAdd = cartItemService.update(amount + cartItemOptional.get().getQuantity(), LocalDateTime.now(), cartId, bookId);
         }

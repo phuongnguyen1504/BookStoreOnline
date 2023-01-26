@@ -97,4 +97,8 @@ export class CartlistComponent implements OnInit {
       }
     }
   }
+
+  addShing(number: number) {
+    
+  }
 }
