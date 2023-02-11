@@ -15,6 +15,9 @@ import {CartModule} from "./cart/cart.module";
 import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 import {ToastrModule} from "ngx-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {environment} from "../environments/environment";
+import {AngularFireModule} from "@angular/fire";
+import {ManageModule} from "./manage/manage.module";
 
 @NgModule({
   declarations: [
@@ -40,7 +43,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         BrowserModule,
       BrowserAnimationsModule,
         AppRoutingModule,
-        ShareModule
+        ShareModule,
+      ManageModule,
+      AngularFireModule.initializeApp(environment.firebaseConfig)
     ],
   providers: [
     {

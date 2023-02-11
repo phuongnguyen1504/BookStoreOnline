@@ -9,9 +9,18 @@ export const environment = {
   user_api: 'http://localhost:8080/api/user',
   customer_api: 'http://localhost:8080/api/customer',
   cart_api: 'http://localhost:8080/api/cart',
-  category_api: 'http://localhost:8080/api/category'
-
+  category_api: 'http://localhost:8080/api/category',
+  firebaseConfig : {
+    apiKey: "AIzaSyCJQmu1QneFQyWt_9k8MWWJZGXL-uTG7fg",
+    authDomain: "bookstore-9a26b.firebaseapp.com",
+    projectId: "bookstore-9a26b",
+    storageBucket: "bookstore-9a26b.appspot.com",
+    messagingSenderId: "119040611053",
+    appId: "1:119040611053:web:71835dd1221c3ec4bc72e4",
+    measurementId: "G-E8CTPZE947"
+  }
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
