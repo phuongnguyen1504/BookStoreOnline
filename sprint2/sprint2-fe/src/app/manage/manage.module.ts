@@ -5,6 +5,7 @@ import { ManageRoutingModule } from './manage-routing.module';
 import { ManageComponent } from './manage.component';
 import { BookComponent } from './book/book.component';
 import {ShareModule} from "../share/share.module";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import {ShareModule} from "../share/share.module";
     imports: [
         CommonModule,
         ManageRoutingModule,
-        ShareModule
+        ShareModule,
+        ReactiveFormsModule
     ]
 })
 export class ManageModule { }

@@ -1,42 +1,191 @@
-
-
 <div class="container-fluid" style="top: 190px;position: relative">
   <h2 style="text-align: center">Quản lý danh sách sách</h2>
-  <div  class="container-fluid" style="margin-bottom: 20px">
+  <div class="container-fluid" style="margin-bottom: 20px">
     <button type="button" class="btn btn-primary"><a data-toggle="modal" data-target=".createbook"><i
       class="icon-user"></i><span
       class="cart-amount white">Thêm sách</span></a></button>
   </div>
-    <table class="table">
-      <thead>
-      <tr>
-        <th scope="col">STT</th>
-        <th scope="col">Loại sách</th>
-        <th scope="col">Tên sách</th>
-        <th scope="col">Năm phát hành</th>
-        <th scope="col">Số lượng</th>
-        <th scope="col">Giá</th>
-      </tr>
-      </thead>
-      <tbody class="table-group-divider">
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Loại sách</th>
+      <th scope="col">Tên sách</th>
+      <th scope="col">Năm phát hành</th>
+      <th scope="col">Số lượng</th>
+      <th scope="col">Giá</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
 
 
-      </tbody>
-    </table>
+    </tbody>
+  </table>
 </div>
 <!-- Extra large modal -->
 
-<div class="modal fade createbook" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+<div class="modal fade createbook" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+     aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
-      ...
+      <div class="modal-header">
+        <h4 class="modal-title">Thêm mới sách</h4>
+        <button type="button" class="close" #closebutton data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="" method="post" [formGroup]="formBook" (ngSubmit)="createBook()" appFocusInvalidInput>
+
+          <div class="form-group">
+            <label>Tên sách<span class="star"> (*) </span></label>
+            <input type="text" class="form-control" formControlName="name">
+            <div
+              *ngIf="formBook.get('name').invalid && (formBook.get('name').touched || formBook.get('name').dirty)"
+              class="alert alert-danger">
+              <div *ngIf="formBook.get('name').errors?.required">
+                Tên sách không được để trống
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Tên tác giả<span class="star"> (*) </span></label>
+            <input type="text" class="form-control" formControlName="author">
+            <div
+              *ngIf="formBook.get('author').invalid && (formBook.get('author').touched || formBook.get('author').dirty)"
+              class="alert alert-danger">
+              <div *ngIf="formBook.get('author').errors?.required">
+                Tên tác giả không được để trống
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Năm phát hành<span class="star"> (*) </span></label>
+            <input name="date" type="date" placeholder="dd/mm/yyyy" class="form-control" formControlName="yearPublish">
+            <div
+              *ngIf="formBook.get('yearPublish').invalid && (formBook.get('yearPublish').touched || formBook.get('yearPublish').dirty)"
+              class="alert alert-danger">
+              <div *ngIf="formBook.get('yearPublish').errors?.required">
+                Năm phát hành không được để trống
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Ảnh bìa sách<span class="star"> (*) </span></label>
+            <input type="file" id="img-book" class="form-control-file" (change)="showPreview($event)">
+            <div
+              *ngIf="formBook.get('img_url').invalid && (formBook.get('img_url').touched || formBook.get('img_url').dirty)"
+              class="alert alert-danger">
+              <div *ngIf="formBook.get('img_url').errors?.required">
+                Ảnh bìa không được để trống
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Giá<span class="star"> (*) </span></label>
+            <input type="number" step="0.01"  class="form-control" formControlName="price">
+            <div
+              *ngIf="formBook.get('price').invalid && (formBook.get('price').touched || formBook.get('price').dirty)"
+              class="alert alert-danger">
+              <div *ngIf="formBook.get('yearPublish').errors?.required">
+                Giá quyển sách không được để trống
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Số lượng<span class="star"> (*) </span></label>
+            <input type="number" class="form-control" formControlName="amount">
+            <div
+              *ngIf="formBook.get('amount').invalid && (formBook.get('amount').touched || formBook.get('amount').dirty)"
+              class="alert alert-danger">
+              <div *ngIf="formBook.get('amount').errors?.required">
+                Số lượng sách nhập kho không được để trống
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Nhà xuất bản<span class="star"> (*) </span></label>
+            <input type="text"  class="form-control" formControlName="publisher">
+            <div
+              *ngIf="formBook.get('publisher').invalid && (formBook.get('publisher').touched || formBook.get('publisher').dirty)"
+              class="alert alert-danger">
+              <div *ngIf="formBook.get('publisher').errors?.required">
+                Nhà xuất bản không được để trống
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Ngôn ngữ<span class="star"> (*) </span></label>
+            <input type="text"  class="form-control" formControlName="language">
+            <div
+              *ngIf="formBook.get('language').invalid && (formBook.get('language').touched || formBook.get('language').dirty)"
+              class="alert alert-danger">
+              <div *ngIf="formBook.get('language').errors?.required">
+                Ngôn ngữ không được để trống
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Đánh giá theo thang 5</label>
+            <select name="numberRating" class="form-control" formControlName="numberRating">
+              <option class="form-select" *ngFor="let i of Arr" [ngValue]="i">{{i}} sao</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tổng số trang<span class="star"> (*) </span></label>
+            <input type="text"  class="form-control" formControlName="totalPages">
+            <div
+              *ngIf="formBook.get('totalPages').invalid && (formBook.get('totalPages').touched || formBook.get('totalPages').dirty)"
+              class="alert alert-danger">
+              <div *ngIf="formBook.get('totalPages').errors?.required">
+                Tổng số trang không được để trống
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Trọng lượng<span class="star"> (*) </span></label>
+            <input type="text"  class="form-control" formControlName="weight">
+            <div
+              *ngIf="formBook.get('weight').invalid && (formBook.get('weight').touched || formBook.get('weight').dirty)"
+              class="alert alert-danger">
+              <div *ngIf="formBook.get('weight').errors?.required">
+                Trọng lượng không được để trống
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Loại danh mục sách</label>
+            <select name="category" class="form-control" formControlName="category">
+              <option class="form-select" *ngFor="let i of categories" [ngValue]="i">{{i.name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Mô tả sách<span class="star"> (*) </span></label>
+            <textarea rows="4" cols="50" class="form-control" formControlName="description"></textarea>
+            <div
+              *ngIf="formBook.get('description').invalid && (formBook.get('description').touched || formBook.get('description').dirty)"
+              class="alert alert-danger">
+              <div *ngIf="formBook.get('description').errors?.required">
+                Mô tả sách không được để trống
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Thoát</button>
+            <button type="submit" class="btn btn-success" data-bs-dismiss="modal" [disabled]="formBook.invalid">Lưu</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
 
+<div *ngIf="loading" id="divElement">
+<span class="loader"></span>
+</div>

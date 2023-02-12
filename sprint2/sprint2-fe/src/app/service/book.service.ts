@@ -48,4 +48,7 @@ export class BookService {
     return this.http.get<any[]>(apiUrl+'/search?q='+searchValue+'&page='+page);
     console.log(apiUrl+'/search?q='+searchValue+'&page='+page);
   }
+
+
+
 }

@@ -41,10 +41,10 @@ public class Book implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String description;
     @OneToMany(mappedBy = "book",cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonBackReference(value = "cartitem")
     private Set<CartItem> cartItems;
     @OneToMany(mappedBy = "book")
-    @JsonManagedReference
+    @JsonBackReference(value = "order")
     private List<OrderDetail> orderDetails;
 //    https://huongdanjava.com/many-many-relationship-extra-columns-jpa.html
 }

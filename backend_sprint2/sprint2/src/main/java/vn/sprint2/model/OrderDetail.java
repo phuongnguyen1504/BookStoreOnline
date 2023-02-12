@@ -17,7 +17,7 @@ public class OrderDetail {
     private Order order;
     @ManyToOne
     @MapsId("bookId")
-    @JsonBackReference
+//    @JsonBackReference
     private Book book;
     private Double price;
     private Integer amount;

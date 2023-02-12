@@ -20,7 +20,7 @@ public class CartItem {
     @ManyToOne
     @MapsId("cartId")
     @JoinColumn(name = "cart_id")
-    @JsonManagedReference
+//    @JsonManagedReference
     private Cart cart;
     @Column(name = "quantity")
     private Integer quantity;
