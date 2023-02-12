@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {BookService} from "../../service/book.service";
@@ -22,6 +22,8 @@ export class BookComponent implements OnInit {
   Arr = [1, 2, 3, 4, 5]; //Array type captured in a variable
   selectedImage: any;
   @ViewChild('closebutton') closebutton;
+  @ViewChild('inputFile') inputFile: ElementRef;
+
   loading: boolean=false;
 
   constructor(private fb: FormBuilder, private router: Router, private bookService: BookService, private categoryService: CategoryService, private toastr: ToastrService,
@@ -50,7 +52,7 @@ export class BookComponent implements OnInit {
     }, error => {
       console.log(error)
     });
-   
+
   }
 
   createBook() {
@@ -73,6 +75,8 @@ export class BookComponent implements OnInit {
               progressBar: true
             })
             this.closebutton.nativeElement.click();
+            this.formBook.reset();
+            this.inputFile.nativeElement.value="";
             // this.router.navigateByUrl('/manager');
           }, error => {
             this.loading=false;
