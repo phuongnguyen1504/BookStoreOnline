@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Customer} from "../model/customer";
+import {User} from "../model/user";
 const api_customer = environment.customer_api;
 @Injectable({
   providedIn: 'root'
@@ -10,18 +10,18 @@ const api_customer = environment.customer_api;
 export class CustomerService {
 
   constructor(private http: HttpClient) { }
-  findById(id: number): Observable<Customer> {
-    return this.http.get<Customer>(`${api_customer}/${id}`);
+  findById(id: number): Observable<User> {
+    return this.http.get<User>(`${api_customer}/${id}`);
   }
-  delete(id: number): Observable<Customer> {
-    return this.http.delete<Customer>(`${api_customer}/${id}`);
-  }
-
-  create(customer: Customer): Observable<Customer> {
-    return this.http.post<Customer>(api_customer, customer);
+  delete(id: number): Observable<User> {
+    return this.http.delete<User>(`${api_customer}/${id}`);
   }
 
-  update(id: number, customer: Customer): Observable<Customer> {
-    return this.http.put<Customer>(`${api_customer}/${id}`, customer);
+  create(customer: User): Observable<User> {
+    return this.http.post<User>(api_customer, customer);
+  }
+
+  update(id: number, customer: User): Observable<User> {
+    return this.http.put<User>(`${api_customer}/${id}`, customer);
   }
 }

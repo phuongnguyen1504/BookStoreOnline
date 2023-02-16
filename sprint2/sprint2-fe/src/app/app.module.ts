@@ -18,6 +18,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {environment} from "../environments/environment";
 import {AngularFireModule} from "@angular/fire";
 import {ManageModule} from "./manage/manage.module";
+import {AngularFireAuth, AngularFireAuthModule} from "@angular/fire/auth";
+import {AuthService} from "./service/auth/auth.service";
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import {ManageModule} from "./manage/manage.module";
         AppRoutingModule,
         ShareModule,
       ManageModule,
-      AngularFireModule.initializeApp(environment.firebaseConfig)
+      AngularFireModule.initializeApp(environment.firebaseConfig),
+      AngularFireAuthModule
     ],
   providers: [
     {
@@ -54,7 +57,8 @@ import {ManageModule} from "./manage/manage.module";
       multi: true
     },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-    JwtHelperService
+    JwtHelperService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

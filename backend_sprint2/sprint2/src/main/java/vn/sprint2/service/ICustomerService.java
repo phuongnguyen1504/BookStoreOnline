@@ -15,4 +15,8 @@ public interface ICustomerService {
     void save(Customer customer);
 
     Customer findByUsername(String username);
+
+    void createNewCart(Long id);
+
+
 }

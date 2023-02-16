@@ -19,7 +19,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class CustomerDto {
+public class  CustomerDto {
     private Long id;
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -32,6 +32,6 @@ public class CustomerDto {
     private String phone;
     private String address;
     private Account account;
-    private List<Cart> carts;
+    private Cart carts;
     private List<Order> orders;
 }

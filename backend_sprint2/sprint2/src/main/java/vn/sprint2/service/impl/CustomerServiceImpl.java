@@ -42,4 +42,11 @@ public class CustomerServiceImpl implements ICustomerService {
     public Customer findByUsername(String username) {
         return customerRepository.findByUserName(username);
     }
+
+    @Override
+    public void createNewCart(Long id) {
+        customerRepository.createNewCart(id);
+    }
+
+
 }

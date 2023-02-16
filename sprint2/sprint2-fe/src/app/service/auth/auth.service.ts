@@ -1,16 +1,42 @@
-import { Injectable } from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {JwtHelperService} from "@auth0/angular-jwt";
-const AUTH_API=environment.api_auth;
+import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
+import {AngularFireAuth} from "@angular/fire/auth";
+import {auth} from "firebase";
+import {Router} from "@angular/router";
+import {User} from "../../model/user";
+import {Account} from "../../model/account";
+import {Oauth} from "../../model/oauth";
+import {TokenStorageService} from "../token-storage.service";
+import {UserService} from "../user.service";
+import {ShareService} from "../share.service";
+import {ToastrService} from "ngx-toastr";
+
+const AUTH_API = environment.api_auth;
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  httpOptions:any;
-  isLoggedIn:boolean;
-  constructor(private http:HttpClient,private jwtHelper: JwtHelperService) {
+  httpOptions: any;
+  userData: any;
+
+  // isLoggedIn:boolean;
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService, private afs: AngularFirestore, private afAuth: AngularFireAuth, private ngZone: NgZone,
+              private router: Router, private tokenStorageService: TokenStorageService, private userService: UserService, private shareService: ShareService, private toastrService: ToastrService) {
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.userData = user;
+        localStorage.setItem('user', JSON.stringify(this.userData));
+        JSON.parse(localStorage.getItem('user')!);
+      } else {
+        localStorage.setItem('user', 'null');
+        JSON.parse(localStorage.getItem('user')!);
+      }
+    });
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -19,18 +45,129 @@ export class AuthService {
       'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
     };
   }
-  login(loginRequest):Observable<any>{
-    return this.http.post(AUTH_API+'/login',{
+
+  /* Setting up user data when sign in with username/password,
+  sign up with username/password and sign in with social auth
+  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
+  SetUserData(user: any) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `users/${user.uid}`
+    );
+
+    const userData: Oauth = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified,
+    };
+    return userRef.set(userData, {
+      merge: true,
+    });
+  }
+
+  login(loginRequest): Observable<any> {
+    return this.http.post(AUTH_API + '/login', {
       username: loginRequest.username,
       password: loginRequest.password
-    },this.httpOptions);
+    }, this.httpOptions);
   }
+
+  loginSocial(loginRequest): Observable<any> {
+
+    return this.http.post(AUTH_API + '/loginWithSocial', {
+      name: loginRequest.displayName,
+      account: {
+        username: loginRequest.email,
+        password: loginRequest.providerId
+      },
+      email: loginRequest.email,
+      img_url: loginRequest.photoURL
+    }, this.httpOptions);
+  }
+
   // public isAuthenticated():boolean{
   //   const token=sessionStorage.getItem('auth-token');
   //   return !this.jwtHelperService.isTokenExpired(token);
   // }
   isAuthenticated() {
-    const token = sessionStorage.getItem('auth-token');
+    const token = localStorage.getItem('auth-token');
     return !this.jwtHelper.isTokenExpired(token);
   }
+
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user')!);
+    console.log("login success");
+    return user !== null && user.emailVerified !== false ? true : false;
+  }
+
+  // Auth logic to run auth providers
+  AuthLogin(provider: any) {
+    return this.afAuth
+      .signInWithPopup(provider)
+      .then((result) => {
+        this.router.navigate(['']);
+        this.SetUserData(result.user);
+        this.loginSocial(result.user).subscribe(
+          data => {
+            this.tokenStorageService.saveTokenLocalStorage(data.accessToken);
+            this.userService.getUserFromToken(data.accessToken).subscribe(value => {
+                this.tokenStorageService.saveUserLocalStorage(value);
+                this.tokenStorageService.saveCartIdSession(data.cartId);
+                this.tokenStorageService.saveLogin();
+                // this.authService.isLoggedIn = true;
+                // this.error=false;
+                this.shareService.sendClickEvent();
+                this.toastrService.success('', 'Đăng nhập thành công', {
+                  timeOut: 2000,
+                  extendedTimeOut: 1500,
+                  progressBar: true
+                })
+                this.router.navigateByUrl('');
+              }
+            );
+          },
+          err => {
+            this.toastrService.error('Tên đăng nhập hoặc tài khoản không đúng', 'Đăng nhập thất bại: ', {
+              timeOut: 2000,
+              extendedTimeOut: 1500,
+              progressBar: true
+            });
+          }
+        );
+  }
+
+)
+.
+
+  catch(
+
+(
+  error
+) => {
+  window
+.
+
+  alert(error);
+}
+
+)
+;
+}
+// Sign in with Google
+GoogleAuth()
+{
+  return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
+
+    this.router.navigate(['/manager']);
+  });
+}
+// Sign out
+SignOut()
+{
+  return this.afAuth.signOut().then(() => {
+    localStorage.removeItem('user');
+    this.router.navigate(['sign-in']);
+  });
+}
 }

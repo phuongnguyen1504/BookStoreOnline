@@ -6,6 +6,7 @@ import {ShareService} from '../../../service/share.service';
 import {UserService} from '../../../service/user.service';
 import {AuthService} from '../../../service/auth/auth.service';
 import {ToastrService} from "ngx-toastr";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -27,23 +28,22 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.formLogin = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]],
+      username: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$')]],
       password: ['', Validators.required],
       rememberMe: []
     });
   }
   login(): void {
-
     if (this.formLogin.valid) {
       console.log(this.formLogin.value);
       this.authService.login(this.formLogin.value).subscribe(
         data => {
-          this.tokenStorageService.saveTokenSession(data.accessToken);
+          this.tokenStorageService.saveTokenLocalStorage(data.accessToken);
           this.userService.getUserFromToken(data.accessToken).subscribe(value => {
-              this.tokenStorageService.saveUserSession(value);
+              this.tokenStorageService.saveUserLocalStorage(value);
               this.tokenStorageService.saveCartIdSession(data.cartId);
               this.tokenStorageService.saveLogin();
-              this.authService.isLoggedIn = true;
+              // this.authService.isLoggedIn = true;
               this.formLogin.reset();
               this.error=false;
               this.closebutton.nativeElement.click();
@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
           );
         },
         err => {
-          this.authService.isLoggedIn = false;
+          // this.authService.isLoggedIn = false;
           this.error=true;
           this.toastrService.error('Tên đăng nhập hoặc tài khoản không đúng', 'Đăng nhập thất bại: ', {
             timeOut: 2000,
@@ -76,6 +76,11 @@ export class LoginComponent implements OnInit {
 
   get password() {
     return this.formLogin.get('password');
+  }
+
+  signInGoogle() {
+    this.authService.GoogleAuth();
+
   }
 
 }

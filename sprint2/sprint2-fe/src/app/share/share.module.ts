@@ -8,10 +8,11 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './security/login/login.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { CartlistComponent } from './cartlist/cartlist.component';
+import { ForgotPasswordComponent } from './security/forgot-password/forgot-password.component';
 
 
 @NgModule({
-    declarations: [ShareComponent, HeaderComponent, FooterComponent, LoginComponent, CartlistComponent],
+    declarations: [ShareComponent, HeaderComponent, FooterComponent, LoginComponent, CartlistComponent, ForgotPasswordComponent],
   exports: [
     HeaderComponent,
     FooterComponent

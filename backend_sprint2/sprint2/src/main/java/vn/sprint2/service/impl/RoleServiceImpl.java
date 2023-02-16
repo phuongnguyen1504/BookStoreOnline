@@ -7,6 +7,7 @@ import vn.sprint2.repository.IRoleRepository;
 import vn.sprint2.service.IRoleService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoleServiceImpl implements IRoleService {
@@ -14,7 +15,12 @@ public class RoleServiceImpl implements IRoleService {
     private IRoleRepository repository;
 
     @Override
-    public List<Role> findByName(String name) {
+    public Optional<Role> findByName(String name) {
         return this.repository.findByName(name);
+    }
+
+    @Override
+    public void createNewRole(String username, Long id) {
+        repository.createNewRole(username,id);
     }
 }

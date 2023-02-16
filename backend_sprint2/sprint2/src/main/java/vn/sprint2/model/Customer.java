@@ -27,7 +27,7 @@ public class Customer {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="username")
     private Account account;
-    @OneToOne(mappedBy = "customer")
+    @OneToOne(mappedBy = "customer",cascade = CascadeType.ALL)
     private Cart cart;
     @OneToMany(mappedBy = "customer")
     @JsonManagedReference
