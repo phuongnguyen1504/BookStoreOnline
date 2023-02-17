@@ -67,7 +67,6 @@ public class AuthenticationController {
     @PostMapping("/loginWithSocial")
     public ResponseEntity<JwtResponse> authenticateSocial(@Valid @RequestBody CustomerDto customerDto){
         System.out.println(new CustomerDto());
-        customerDto.getAccount().setPassword(customerDto.getAccount().getPassword());
         if (!accountService.findByUsername(customerDto.getAccount().getUsername()).isPresent()){
             Customer customer=new Customer();
             BeanUtils.copyProperties(customerDto,customer);

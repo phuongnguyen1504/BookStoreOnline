@@ -29,9 +29,13 @@
               <div class="header-action header-action-flex">
                 <div [hidden]="isLoggedIn"
                      class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
-                  <a data-toggle="modal" data-target="#login" (click)="HideCollapse()"><i
+                  <a routerLink="/login"><i
                     class="icon-user"></i><span
                     class="cart-amount white">Đăng kí/Đăng nhập</span></a>
+<!--                  <a data-toggle="modal" data-target="#login" (click)="HideCollapse()"><i-->
+<!--                    class="icon-user"></i><span-->
+<!--                    class="cart-amount white">Đăng kí/Đăng nhập</span></a>-->
+
                 </div>
                 <div [hidden]="!isLoggedIn"
                      class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
@@ -54,7 +58,7 @@
             <div class="col-xl-1 col-lg-1">
               <div class="header-action header-action-flex" [hidden]="isLoggedIn">
                 <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
-                  <a class="cart-active" (click)="listCart()" data-toggle="modal" data-target="#login">
+                  <a class="cart-active" (click)="listCart()" routerLink="/login">
                     <i class="fa-solid fa-cart-shopping"></i>
 <!--                    <span class="pro-count black"></span>-->
                     <span class="cart-amount white"></span>
@@ -161,7 +165,8 @@
                   <li><a href="my-account.html">Tài khoản của tôi</a></li>
                   <li><a href="contact.html">Liên hệ</a></li>
                   <li><a href="order-tracking.html">Theo dõi đơn hàng</a></li>
-                  <li [hidden]="isLoggedIn"><a data-toggle="modal" data-target="#login" (click)="HideCollapse()">login / register </a></li>
+                  <li [hidden]="isLoggedIn"><a routerLink="/login">Đăng nhập/Đăng kí</a></li>
+<!--                  <li [hidden]="isLoggedIn"><a data-toggle="modal" data-target="#login" (click)="HideCollapse()">login / register </a></li>-->
                   <li [hidden]="!isLoggedIn"><a (click)="HideCollapse()" data-bs-toggle="modal"
                                                 data-bs-target="#logOutModal">{{username}}</a></li>
 
@@ -184,7 +189,7 @@
 
 </section>
 <!--<app-cartlist [item]="isLoggedIn"></app-cartlist>-->
-<app-login></app-login>
+
 
 
 

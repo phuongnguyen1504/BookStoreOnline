@@ -23,7 +23,7 @@ const AUTH_API = environment.api_auth;
 export class AuthService {
   httpOptions: any;
   userData: any;
-
+  loading:boolean=false;
   // isLoggedIn:boolean;
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService, private afs: AngularFirestore, private afAuth: AngularFireAuth, private ngZone: NgZone,
               private router: Router, private tokenStorageService: TokenStorageService, private userService: UserService, private shareService: ShareService, private toastrService: ToastrService) {
@@ -103,71 +103,55 @@ export class AuthService {
 
   // Auth logic to run auth providers
   AuthLogin(provider: any) {
+    this.loading=true;
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-        this.router.navigate(['']);
-        this.SetUserData(result.user);
-        this.loginSocial(result.user).subscribe(
-          data => {
-            this.tokenStorageService.saveTokenLocalStorage(data.accessToken);
-            this.userService.getUserFromToken(data.accessToken).subscribe(value => {
-                this.tokenStorageService.saveUserLocalStorage(value);
-                this.tokenStorageService.saveCartIdSession(data.cartId);
-                this.tokenStorageService.saveLogin();
-                // this.authService.isLoggedIn = true;
-                // this.error=false;
-                this.shareService.sendClickEvent();
-                this.toastrService.success('', 'Đăng nhập thành công', {
-                  timeOut: 2000,
-                  extendedTimeOut: 1500,
-                  progressBar: true
-                })
-                this.router.navigateByUrl('');
-              }
-            );
-          },
-          err => {
-            this.toastrService.error('Tên đăng nhập hoặc tài khoản không đúng', 'Đăng nhập thất bại: ', {
-              timeOut: 2000,
-              extendedTimeOut: 1500,
-              progressBar: true
-            });
-          }
-        );
+          this.router.navigate(['']);
+          this.SetUserData(result.user);
+          this.loginSocial(result.user).subscribe(
+            data => {
+              this.tokenStorageService.saveTokenLocalStorage(data.accessToken);
+              this.userService.getUserFromToken(data.accessToken).subscribe(value => {
+                  this.tokenStorageService.saveUserLocalStorage(value);
+                  this.tokenStorageService.saveCartIdSession(data.cartId);
+                  this.tokenStorageService.saveLogin();
+                  this.loading=false;
+                  this.shareService.sendClickEvent();
+                  this.toastrService.success('', 'Đăng nhập thành công', {
+                    timeOut: 2000,
+                    extendedTimeOut: 1500,
+                    progressBar: true
+                  })
+                  this.router.navigateByUrl('');
+                }
+              );
+            }
+          );
+        }
+      )
+      .catch((error) => {
+        this.loading=false;
+          this.toastrService.error('Bạn chưa đăng nhập tài khoản google', 'Đăng nhập thất bại: ', {
+            timeOut: 2000,
+            extendedTimeOut: 1500,
+            progressBar: true
+          });
+        });
   }
 
-)
-.
-
-  catch(
-
-(
-  error
-) => {
-  window
-.
-
-  alert(error);
-}
-
-)
-;
-}
 // Sign in with Google
-GoogleAuth()
-{
-  return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
+  GoogleAuth() {
+    return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
 
-    this.router.navigate(['/manager']);
-  });
-}
+    });
+  }
+
 // Sign out
-SignOut()
-{
-  return this.afAuth.signOut().then(() => {
-    localStorage.removeItem('user');
-    this.router.navigate(['sign-in']);
-  });
-}
+  SignOut() {
+    return this.afAuth.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['sign-in']);
+    });
+  }
 }

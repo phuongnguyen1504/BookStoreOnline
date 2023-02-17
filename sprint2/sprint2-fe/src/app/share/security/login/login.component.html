@@ -1,84 +1,160 @@
-<!-- Modal -->
-
-<div class="modal fade" id="login" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="close-modal">
-        <img #closebutton data-dismiss="modal" aria-label="Close" class="close-img"
-             src="https://salt.tikicdn.com/ts/upload/fe/20/d7/6d7764292a847adcffa7251141eb4730.png" aria-hidden="true"
-             alt="icon">
-
+<div class="logo" style="z-index: 90;position: relative">
+  <a routerLink="/"><img
+    src="https://png.pngtree.com/png-clipart/20220605/original/pngtree-open-book-logo-eps-png-free-download-png-image_7965241.png"
+    alt="logo" style="margin-left: 20px; width: 70px;height: 70px"></a>
+</div>
+<section class="loginFormSection">
+  <div class="bg" style="z-index: 9"></div>
+  <div class="bg bg2" style="z-index: 9"></div>
+  <div class="bg bg3" style="z-index: 9"></div>
+  <div class="login" [ngClass]="{'right-panel-active':id==1}" id="login" style="z-index: 999">
+    <div class="form-container sign-up-container col-sm-6 col-12">
+      <!--    <form action="#">-->
+      <h1>Tạo tài khoản</h1>
+      <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a class="social" (click)="signInGoogle()"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
       </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-6 siginout">
-            <form class="form-login" method="post" #flg="ngForm" [formGroup]="formLogin" (ngSubmit)="login()"
-                  appFocusInvalidInput>
-              <h2 class="title">Xin Chào bạn</h2>
-              <div class="input-div username">
-                <div class="i">
-                  <i class="fas fa-user"></i>
-                </div>
-                <div class="div">
-                  <input type="text" class="input" formControlName="username" placeholder="Tên tài khoản">
-                  <div *ngIf="username.invalid && (username.touched || flg.submitted)" class="text-danger message">
-                    <div *ngIf="username.errors?.required">
-                      Tên tài khoản không được để trống.
-                    </div>
-                    <div *ngIf="username.errors?.pattern">
-                      Tên tài khoản không được chứa ký tự đặc biệt.
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="input-div pass">
-                <div class="i">
-                  <i class="fas fa-lock"></i>
-                </div>
-                <div class="div">
-                  <input type="password" class="input" formControlName="password" placeholder="Mật khẩu">
-                  <div *ngIf="password.invalid && (password.touched || flg.submitted)" class="text-danger message">
-                    <div *ngIf="password.errors?.required">
-                      Mật khẩu không được để trống.
-                    </div>
-                  </div>
-                </div>
-              </div>
-<!--              <div class="forgotAndRememberPass">-->
-<!--                <div class="rememberMe">-->
-<!--                  <input type="checkbox" formControlName="rememberMe"><span>Nhớ mật khẩu</span>-->
-<!--                </div>-->
-<!--                &lt;!&ndash;        routerLink="/authen/forgot-password"&ndash;&gt;-->
-
-<!--              </div>-->
-<!--              <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer">-->
-<!--                Quên mật khẩu?-->
-<!--              </a>-->
-              <input type="submit" class="btn" value="Đăng nhập">
-              <div *ngIf="error" class="text-danger message">
-                <div *ngIf="password.errors?.required">
-                  Tên đăng nhập hoặc Mật khẩu không đúng.
-                </div>
-              </div>
-            </form>
-            <!-- Calling GoogleAuth Api from AuthService -->
-            <div class="formGroup">
-              <button type="button" class="btn googleBtn" (click)="signInGoogle()">
-                <i class="fab fa-google-plus-g"></i>
-                Log in with Google
-              </button>
-            </div>
+      <span>Hoặc sử dụng email để đăng ký</span>
+      <input type="text" placeholder="Name"/>
+      <input type="email" placeholder="Email"/>
+      <input type="password" placeholder="Password"/>
+      <button>Đăng ký</button>
+      <!--    </form>-->
+    </div>
+    <div class="form-container sign-in-container col-sm-6 col-12">
+      <form method="post" #flg="ngForm" [formGroup]="formLogin" (ngSubmit)="login()" appFocusInvalidInput>
+      <h1>Đăng nhập</h1>
+      <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a class="social" (click)="signInGoogle()"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <span>hoặc bằng tài khoản của bạn</span>
+        <input type="text" class="input" formControlName="username" placeholder="Tên tài khoản">
+        <div *ngIf="username.invalid && (username.touched || flg.submitted)" class="text-danger message">
+          <div *ngIf="username.errors?.required">
+            Tên tài khoản không được để trống.
           </div>
-          <div class="col-6 img-modal">
-            <img src="https://salt.tikicdn.com/ts/upload/eb/f3/a3/25b2ccba8f33a5157f161b6a50f64a60.png">
-            <div class="content">
-              <h4>Mua sắm vui vẻ</h4>
-              <span>Siêu ưu đãi mỗi ngày</span>
-            </div>
+          <div *ngIf="username.errors?.pattern">
+            Tên tài khoản không được chứa ký tự đặc biệt.
           </div>
+        </div>
+        <input type="password" class="input" formControlName="password" placeholder="Mật khẩu">
+        <div *ngIf="password.invalid && (password.touched || flg.submitted)" class="text-danger message">
+          <div *ngIf="password.errors?.required">
+            Mật khẩu không được để trống.
+          </div>
+        </div>
+        <a href="#" style="margin-right: 20px">Quên mật khẩu?</a>
+        <button type="submit">Đăng nhập</button>
+        <div *ngIf="error" class="text-danger message">
+          <div *ngIf="password.errors?.required">
+            Tên đăng nhập hoặc Mật khẩu không đúng.
+          </div>
+        </div>
+      </form>
+      
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Chào mừng trở lại!</h1>
+          <p style="color: whitesmoke">Để tìm kiếm hoặc đặt mua sách vui lòng đăng nhập tài khoản của bạn</p>
+          <button class="ghost" id="signIn" (click)="addClass(id=0)">Đăng nhập</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Xin Chào Quý Khách!!!</h1>
+          <p style="color: whitesmoke">Vui lòng điền thông tin của bạn để trở thành thành viên của chúng tôi</p>
+          <button class="ghost" id="signUp" (click)="addClass(id=1)">Đăng kí</button>
         </div>
       </div>
     </div>
   </div>
-</div>
-<!-- Modal end -->
+</section>
+<app-loading *ngIf="loading"></app-loading>
+<!--&lt;!&ndash; Modal &ndash;&gt;-->
+
+<!--<div class="modal fade" id="login" tabindex="-1" role="dialog">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="close-modal">-->
+<!--        <img #closebutton data-dismiss="modal" aria-label="Close" class="close-img"-->
+<!--             src="https://salt.tikicdn.com/ts/upload/fe/20/d7/6d7764292a847adcffa7251141eb4730.png" aria-hidden="true"-->
+<!--             alt="icon">-->
+
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        <div class="row">-->
+<!--          <div class="col-6 siginout">-->
+<!--            <form class="form-login" method="post" #flg="ngForm" [formGroup]="formLogin" (ngSubmit)="login()"-->
+<!--                  appFocusInvalidInput>-->
+<!--              <h2 class="title">Xin Chào bạn</h2>-->
+<!--              <div class="input-div username">-->
+<!--                <div class="i">-->
+<!--                  <i class="fas fa-user"></i>-->
+<!--                </div>-->
+<!--                <div class="div">-->
+<!--                  <input type="text" class="input" formControlName="username" placeholder="Tên tài khoản">-->
+<!--                  <div *ngIf="username.invalid && (username.touched || flg.submitted)" class="text-danger message">-->
+<!--                    <div *ngIf="username.errors?.required">-->
+<!--                      Tên tài khoản không được để trống.-->
+<!--                    </div>-->
+<!--                    <div *ngIf="username.errors?.pattern">-->
+<!--                      Tên tài khoản không được chứa ký tự đặc biệt.-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="input-div pass">-->
+<!--                <div class="i">-->
+<!--                  <i class="fas fa-lock"></i>-->
+<!--                </div>-->
+<!--                <div class="div">-->
+<!--                  <input type="password" class="input" formControlName="password" placeholder="Mật khẩu">-->
+<!--                  <div *ngIf="password.invalid && (password.touched || flg.submitted)" class="text-danger message">-->
+<!--                    <div *ngIf="password.errors?.required">-->
+<!--                      Mật khẩu không được để trống.-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--&lt;!&ndash;              <div class="forgotAndRememberPass">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="rememberMe">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <input type="checkbox" formControlName="rememberMe"><span>Nhớ mật khẩu</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                &lt;!&ndash;        routerLink="/authen/forgot-password"&ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer">&ndash;&gt;-->
+<!--&lt;!&ndash;                Quên mật khẩu?&ndash;&gt;-->
+<!--&lt;!&ndash;              </a>&ndash;&gt;-->
+<!--              <input type="submit" class="btn" value="Đăng nhập">-->
+<!--              <div *ngIf="error" class="text-danger message">-->
+<!--                <div *ngIf="password.errors?.required">-->
+<!--                  Tên đăng nhập hoặc Mật khẩu không đúng.-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </form>-->
+<!--            &lt;!&ndash; Calling GoogleAuth Api from AuthService &ndash;&gt;-->
+<!--            <div class="formGroup">-->
+<!--              <button type="button" class="btn googleBtn" (click)="signInGoogle()">-->
+<!--                <i class="fab fa-google-plus-g"></i>-->
+<!--                Log in with Google-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-6 img-modal">-->
+<!--            <img src="https://salt.tikicdn.com/ts/upload/eb/f3/a3/25b2ccba8f33a5157f161b6a50f64a60.png">-->
+<!--            <div class="content">-->
+<!--              <h4>Mua sắm vui vẻ</h4>-->
+<!--              <span>Siêu ưu đãi mỗi ngày</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Modal end &ndash;&gt;-->

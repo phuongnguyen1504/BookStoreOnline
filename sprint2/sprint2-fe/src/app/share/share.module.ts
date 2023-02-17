@@ -9,10 +9,11 @@ import { LoginComponent } from './security/login/login.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { CartlistComponent } from './cartlist/cartlist.component';
 import { ForgotPasswordComponent } from './security/forgot-password/forgot-password.component';
+import { LoadingComponent } from './loading/loading.component';
 
 
 @NgModule({
-    declarations: [ShareComponent, HeaderComponent, FooterComponent, LoginComponent, CartlistComponent, ForgotPasswordComponent],
+    declarations: [ShareComponent, HeaderComponent, FooterComponent, LoginComponent, CartlistComponent, ForgotPasswordComponent, LoadingComponent],
   exports: [
     HeaderComponent,
     FooterComponent

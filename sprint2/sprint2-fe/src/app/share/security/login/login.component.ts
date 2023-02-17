@@ -1,7 +1,7 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TokenStorageService} from '../../../service/token-storage.service';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {ShareService} from '../../../service/share.service';
 import {UserService} from '../../../service/user.service';
 import {AuthService} from '../../../service/auth/auth.service';
@@ -18,13 +18,19 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
   @ViewChild('closebutton') closebutton;
   error: boolean=false;
+  id: any;
+  loading: boolean =false;
+  addClass(id:any){
+    this.id=id;
+  }
 
   constructor(private formBuilder: FormBuilder, private  el: ElementRef,
               private tokenStorageService: TokenStorageService,
               private router: Router,
               private authService: AuthService,
               private userService: UserService,
-              private shareService: ShareService,private toastrService: ToastrService) { }
+              private shareService: ShareService,private toastrService: ToastrService) {}
+
 
   ngOnInit(): void {
     this.formLogin = this.formBuilder.group({
@@ -79,8 +85,10 @@ export class LoginComponent implements OnInit {
   }
 
   signInGoogle() {
+    this.loading=true;
     this.authService.GoogleAuth();
-
+    this.loading=false;
   }
+
 
 }
