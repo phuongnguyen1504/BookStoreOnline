@@ -15,11 +15,14 @@ import {Observable} from "rxjs";
 })
 export class LoginComponent implements OnInit {
   formLogin: FormGroup;
+  formSignUp: FormGroup;
+  formResetPass: FormGroup;
   roles: string[] = [];
-  @ViewChild('closebutton') closebutton;
   error: boolean=false;
   id: any;
   loading: boolean =false;
+  @ViewChild('modalForgot') modalForgotPass;
+  @ViewChild('closBtn') closBtn;
   addClass(id:any){
     this.id=id;
   }
@@ -34,10 +37,43 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.formLogin = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$')]],
+      username: ['', [Validators.required, Validators.pattern('^(([^<>()[\\]\\.,;:\\s@\\"]+(\\.[^<>()[\\]\\.,;:\\s@\\"]+)*)|(\\".+\\"))@(([^<>()[\\]\\.,;:\\s@\\"]+\\.)+[^<>()[\\]\\.,;:\\s@\\"]{2,})$')]],
       password: ['', Validators.required],
       rememberMe: []
     });
+    this.formSignUp = this.formBuilder.group({
+      name: ['', Validators.required],
+      username: ['', [Validators.required, Validators.pattern('^(([^<>()[\\]\\.,;:\\s@\\"]+(\\.[^<>()[\\]\\.,;:\\s@\\"]+)*)|(\\".+\\"))@(([^<>()[\\]\\.,;:\\s@\\"]+\\.)+[^<>()[\\]\\.,;:\\s@\\"]{2,})$')]],
+      password: ['', Validators.required]
+    });
+    this.formResetPass = this.formBuilder.group({
+      email: ['', [Validators.email, Validators.required]]
+    });
+
+  }
+  signUp():void{
+    if (this.formSignUp.valid) {
+      console.log(this.formSignUp.value);
+      this.authService.signup(this.formSignUp.value).subscribe(
+        (data) => {
+          console.log("Hello");
+          this.addClass(0);
+          this.formSignUp.reset();
+          this.toastrService.success(data.message, 'Đăng nhập thành công', {
+            timeOut: 2000,
+            extendedTimeOut: 1500,
+            progressBar: true
+          })
+        },err => {
+            this.error=true;
+            console.log("Hi");
+            this.toastrService.error(err.error.message, 'Đăng nhập thất bại: ', {
+              timeOut: 2000,
+              extendedTimeOut: 1500,
+              progressBar: true
+            });
+        });
+    };
   }
   login(): void {
     if (this.formLogin.valid) {
@@ -52,14 +88,13 @@ export class LoginComponent implements OnInit {
               // this.authService.isLoggedIn = true;
               this.formLogin.reset();
               this.error=false;
-              this.closebutton.nativeElement.click();
-              this.shareService.sendClickEvent();
+              // this.shareService.sendClickEvent();
             this.toastrService.success('', 'Đăng nhập thành công', {
               timeOut: 2000,
               extendedTimeOut: 1500,
               progressBar: true
             })
-              this.router.navigateByUrl('');
+            this.router.navigate(['/']);
             }
           );
         },
@@ -83,12 +118,52 @@ export class LoginComponent implements OnInit {
   get password() {
     return this.formLogin.get('password');
   }
+  get nameSignUp() {
+    return this.formSignUp.get('name');
+  }
+  get usernameSignUp() {
+    return this.formSignUp.get('username');
+  }
+  get passwordSignUp() {
+    return this.formSignUp.get('password');
+  }
+  get email() {
+    return this.formResetPass.get('email');
+  }
 
   signInGoogle() {
     this.loading=true;
     this.authService.GoogleAuth();
+
     this.loading=false;
   }
+  forgotPassword() {
+    if (this.formResetPass.valid) {
+      this.loading=true;
+      this.authService.forgotPassword(this.formResetPass.get('email').value).subscribe(
+        data => {
+          this.loading=false;
+          this.toastrService.success(data.message, 'Thông báo', {
+            timeOut: 2000,
+            extendedTimeOut: 1500,
+            progressBar: true
+          });
+          this.closBtn.nativeElement.click();
+        },
+        error => {
+          this.loading=false;
+          this.toastrService.warning(error.error.message, 'Thông báo', {
+            timeOut: 2000,
+            extendedTimeOut: 1500,
+            progressBar: true
+          });
+        }
+      );
+    }
+  }
 
+  onForgotPasswordClicked() {
+    this.modalForgotPass.nativeElement.showModal();
+  }
 
 }

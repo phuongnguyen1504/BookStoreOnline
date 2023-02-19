@@ -17,15 +17,19 @@ import vn.sprint2.model.Cart;
 import vn.sprint2.model.Customer;
 import vn.sprint2.model.Role;
 import vn.sprint2.payload.request.LoginRequest;
+import vn.sprint2.payload.request.SignUpRequest;
 import vn.sprint2.payload.response.JwtResponse;
+import vn.sprint2.payload.response.ResponseMessage;
 import vn.sprint2.security.JwtUtil;
 import vn.sprint2.security.MyUserDetails;
 import vn.sprint2.service.*;
+import vn.sprint2.utils.EmailService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -45,6 +49,8 @@ public class AuthenticationController {
     @Autowired
     private ICreateCartService cartService;
     @Autowired
+    private EmailService emailService;
+    @Autowired
     private JwtUtil jwtUtil;
 
     @PostMapping("/login")
@@ -61,34 +67,39 @@ public class AuthenticationController {
         String accessToken = this.jwtUtil.generateAccessToken(loginRequest.getUsername());
         //trả về 1 đối tượng account accountService.findByUsername(myUserDetails.getUsername()) sau đó get để lấy thuộc tính
         Long cart_id = accountService.findByUsername(myUserDetails.getUsername()).get().getCustomer().getCart().getId();
-        JwtResponse jwtResponse = new JwtResponse(myUserDetails.getUsername(), accessToken, roles,cart_id);
+        JwtResponse jwtResponse = new JwtResponse(myUserDetails.getUsername(), accessToken, roles, cart_id);
         return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
     }
+
     @PostMapping("/loginWithSocial")
-    public ResponseEntity<JwtResponse> authenticateSocial(@Valid @RequestBody CustomerDto customerDto){
-        System.out.println(new CustomerDto());
-        if (!accountService.findByUsername(customerDto.getAccount().getUsername()).isPresent()){
-            Customer customer=new Customer();
-            BeanUtils.copyProperties(customerDto,customer);
+    public ResponseEntity<JwtResponse> authenticateSocial(@Valid @RequestBody CustomerDto customerDto) {
+
+
+//        System.out.println(new CustomerDto());
+        if (!accountService.findByUsername(customerDto.getAccount().getUsername()).isPresent()) {
+            Customer customer = new Customer();
+            BeanUtils.copyProperties(customerDto, customer);
             customer.getAccount().setPassword(bCryptPasswordEncoder.encode(customer.getAccount().getPassword()));
-            System.out.println(customer);
             customerService.save(customer);
 
-            Account account=accountService.findByUsername(customerDto.getAccount().getUsername()).get();
-            if (account!=null){
-                Role role=roleService.findByName("USER").get();
-                List<Role> roles=new ArrayList<>();
+            Account account = accountService.findByUsername(customerDto.getAccount().getUsername()).get();
+            if (account != null) {
+                Role role = roleService.findByName("USER").get();
+                List<Role> roles = new ArrayList<>();
                 roles.add(role);
                 account.setRoles(roles);
                 accountService.save(account);
             }
-            Cart cart=new Cart();
+            Cart cart = new Cart();
             cart.setCustomer(customerService.findByUsername(customerDto.getAccount().getUsername()));
             cartService.save(cart);
 
+
         }
+
+
         Authentication authentication = this.authenManager.
-                authenticate(new UsernamePasswordAuthenticationToken(customerDto.getAccount().getUsername(),customerDto.getAccount().getPassword()));
+                authenticate(new UsernamePasswordAuthenticationToken(customerDto.getAccount().getUsername(), customerDto.getAccount().getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<String> roles = myUserDetails.getAuthorities().stream().
@@ -96,7 +107,45 @@ public class AuthenticationController {
         String accessToken = this.jwtUtil.generateAccessToken(customerDto.getAccount().getUsername());
         //trả về 1 đối tượng account accountService.findByUsername(myUserDetails.getUsername()) sau đó get để lấy thuộc tính
         Long cart_id = accountService.findByUsername(myUserDetails.getUsername()).get().getCustomer().getCart().getId();
-        JwtResponse jwtResponse = new JwtResponse(myUserDetails.getUsername(), accessToken, roles,cart_id);
+        JwtResponse jwtResponse = new JwtResponse(myUserDetails.getUsername(), accessToken, roles, cart_id);
         return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<ResponseMessage> signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
+        Optional<Account> accountExist = accountService.findByUsername(signUpRequest.getAccount().getUsername());
+        if (accountExist.isPresent()) {
+            return new ResponseEntity<>(new ResponseMessage("Tài khoản đã tồn tại trong hệ thống"), HttpStatus.CONFLICT);
+        }
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(signUpRequest,customer);
+        customer.getAccount().setPassword(bCryptPasswordEncoder.encode(customer.getAccount().getPassword()));
+        customerService.save(customer);
+        Account account = accountService.findByUsername(signUpRequest.getAccount().getUsername()).get();
+        if (account != null) {
+            Role role = roleService.findByName("USER").get();
+            List<Role> roles = new ArrayList<>();
+            roles.add(role);
+            account.setRoles(roles);
+            accountService.save(account);
+        }
+        Cart cart = new Cart();
+        cart.setCustomer(customerService.findByUsername(signUpRequest.getAccount().getUsername()));
+        cartService.save(cart);
+        return new ResponseEntity<>(new ResponseMessage("Đã thêm thành công"), HttpStatus.OK);
+    }
+    @GetMapping("/forgot-password")
+    public ResponseEntity<ResponseMessage> forgotPassword(@RequestParam String email){
+        Optional<Customer> customerOptional = customerService.findByEmail(email);
+        if (!customerOptional.isPresent()) {
+            return new ResponseEntity<>(new ResponseMessage("Email không tồn tại trong hệ thống"), HttpStatus.NOT_FOUND);
+        }
+        Customer customer = customerOptional.get();
+        String token = this.jwtUtil.generateAccessToken(customer.getAccount().getUsername());
+        String resetPasswordLink = "http://localhost:4200/authen/resetpassword/" + token;
+        if (emailService.sendEmail(email, resetPasswordLink)) {
+            return new ResponseEntity<>(new ResponseMessage("Gửi email thành công"), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new ResponseMessage("Gửi email thất bại"), HttpStatus.BAD_REQUEST);
     }
 }

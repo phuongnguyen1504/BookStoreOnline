@@ -65,7 +65,17 @@ export class AuthService {
       merge: true,
     });
   }
+  signup(loginRequest) :Observable<any>{
+    return this.http.post(AUTH_API + '/signup', {
+      name:loginRequest.name,
+      email:loginRequest.username,
+      account:{
+        username: loginRequest.username,
+        password: loginRequest.password
+      }
+    }, this.httpOptions);
 
+  }
   login(loginRequest): Observable<any> {
     return this.http.post(AUTH_API + '/login', {
       username: loginRequest.username,
@@ -153,5 +163,10 @@ export class AuthService {
       localStorage.removeItem('user');
       this.router.navigate(['sign-in']);
     });
+  }
+
+
+  forgotPassword(email): Observable<any> {
+    return this.http.get(AUTH_API + '/forgot-password?email=' + email, this.httpOptions);
   }
 }

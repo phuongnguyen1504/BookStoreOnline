@@ -9,7 +9,7 @@
   <div class="bg bg3" style="z-index: 9"></div>
   <div class="login" [ngClass]="{'right-panel-active':id==1}" id="login" style="z-index: 999">
     <div class="form-container sign-up-container col-sm-6 col-12">
-      <!--    <form action="#">-->
+      <form method="post" #flg="ngForm" [formGroup]="formSignUp" (ngSubmit)="signUp()" appFocusInvalidInput>
       <h1>Tạo tài khoản</h1>
       <div class="social-container">
         <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -17,11 +17,29 @@
         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
       </div>
       <span>Hoặc sử dụng email để đăng ký</span>
-      <input type="text" placeholder="Name"/>
-      <input type="email" placeholder="Email"/>
-      <input type="password" placeholder="Password"/>
-      <button>Đăng ký</button>
-      <!--    </form>-->
+      <input type="text" placeholder="Họ tên" formControlName="name"/>
+        <div *ngIf="nameSignUp.invalid && (nameSignUp.touched || flg.submitted)" class="text-danger message">
+          <div *ngIf="nameSignUp.errors?.required">
+            Tên tài khoản không được để trống.
+          </div>
+        </div>
+        <input type="text" class="input" formControlName="username" placeholder="Tên tài khoản">
+        <div *ngIf="usernameSignUp.invalid && (usernameSignUp.touched || flg.submitted)" class="text-danger message">
+          <div *ngIf="usernameSignUp.errors?.required">
+            Tên tài khoản không được để trống.
+          </div>
+          <div *ngIf="usernameSignUp.errors?.pattern">
+            Tên tài khoản không được chứa ký tự đặc biệt.
+          </div>
+        </div>
+        <input type="password" class="input" formControlName="password" placeholder="Mật khẩu">
+        <div *ngIf="passwordSignUp.invalid && (passwordSignUp.touched || flg.submitted)" class="text-danger message">
+          <div *ngIf="passwordSignUp.errors?.required">
+            Mật khẩu không được để trống.
+          </div>
+        </div>
+        <button type="submit">Đăng ký</button>
+          </form>
     </div>
     <div class="form-container sign-in-container col-sm-6 col-12">
       <form method="post" #flg="ngForm" [formGroup]="formLogin" (ngSubmit)="login()" appFocusInvalidInput>
@@ -47,7 +65,10 @@
             Mật khẩu không được để trống.
           </div>
         </div>
-        <a href="#" style="margin-right: 20px">Quên mật khẩu?</a>
+
+        <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer;margin-right: 20px" (click)="onForgotPasswordClicked()">
+          Quên mật khẩu?
+        </a>
         <button type="submit">Đăng nhập</button>
         <div *ngIf="error" class="text-danger message">
           <div *ngIf="password.errors?.required">
@@ -55,7 +76,7 @@
           </div>
         </div>
       </form>
-      
+
     </div>
     <div class="overlay-container">
       <div class="overlay">
@@ -74,87 +95,54 @@
   </div>
 </section>
 <app-loading *ngIf="loading"></app-loading>
-<!--&lt;!&ndash; Modal &ndash;&gt;-->
 
-<!--<div class="modal fade" id="login" tabindex="-1" role="dialog">-->
-<!--  <div class="modal-dialog">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="close-modal">-->
-<!--        <img #closebutton data-dismiss="modal" aria-label="Close" class="close-img"-->
-<!--             src="https://salt.tikicdn.com/ts/upload/fe/20/d7/6d7764292a847adcffa7251141eb4730.png" aria-hidden="true"-->
-<!--             alt="icon">-->
-
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        <div class="row">-->
-<!--          <div class="col-6 siginout">-->
-<!--            <form class="form-login" method="post" #flg="ngForm" [formGroup]="formLogin" (ngSubmit)="login()"-->
-<!--                  appFocusInvalidInput>-->
-<!--              <h2 class="title">Xin Chào bạn</h2>-->
-<!--              <div class="input-div username">-->
-<!--                <div class="i">-->
-<!--                  <i class="fas fa-user"></i>-->
-<!--                </div>-->
-<!--                <div class="div">-->
-<!--                  <input type="text" class="input" formControlName="username" placeholder="Tên tài khoản">-->
-<!--                  <div *ngIf="username.invalid && (username.touched || flg.submitted)" class="text-danger message">-->
-<!--                    <div *ngIf="username.errors?.required">-->
-<!--                      Tên tài khoản không được để trống.-->
-<!--                    </div>-->
-<!--                    <div *ngIf="username.errors?.pattern">-->
-<!--                      Tên tài khoản không được chứa ký tự đặc biệt.-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="input-div pass">-->
-<!--                <div class="i">-->
-<!--                  <i class="fas fa-lock"></i>-->
-<!--                </div>-->
-<!--                <div class="div">-->
-<!--                  <input type="password" class="input" formControlName="password" placeholder="Mật khẩu">-->
-<!--                  <div *ngIf="password.invalid && (password.touched || flg.submitted)" class="text-danger message">-->
-<!--                    <div *ngIf="password.errors?.required">-->
-<!--                      Mật khẩu không được để trống.-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--&lt;!&ndash;              <div class="forgotAndRememberPass">&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="rememberMe">&ndash;&gt;-->
-<!--&lt;!&ndash;                  <input type="checkbox" formControlName="rememberMe"><span>Nhớ mật khẩu</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                &lt;!&ndash;        routerLink="/authen/forgot-password"&ndash;&gt;&ndash;&gt;-->
-
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer">&ndash;&gt;-->
-<!--&lt;!&ndash;                Quên mật khẩu?&ndash;&gt;-->
-<!--&lt;!&ndash;              </a>&ndash;&gt;-->
-<!--              <input type="submit" class="btn" value="Đăng nhập">-->
-<!--              <div *ngIf="error" class="text-danger message">-->
-<!--                <div *ngIf="password.errors?.required">-->
-<!--                  Tên đăng nhập hoặc Mật khẩu không đúng.-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </form>-->
-<!--            &lt;!&ndash; Calling GoogleAuth Api from AuthService &ndash;&gt;-->
-<!--            <div class="formGroup">-->
-<!--              <button type="button" class="btn googleBtn" (click)="signInGoogle()">-->
-<!--                <i class="fab fa-google-plus-g"></i>-->
-<!--                Log in with Google-->
-<!--              </button>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div class="col-6 img-modal">-->
-<!--            <img src="https://salt.tikicdn.com/ts/upload/eb/f3/a3/25b2ccba8f33a5157f161b6a50f64a60.png">-->
-<!--            <div class="content">-->
-<!--              <h4>Mua sắm vui vẻ</h4>-->
-<!--              <span>Siêu ưu đãi mỗi ngày</span>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-<!--&lt;!&ndash; Modal end &ndash;&gt;-->
+<div #modalForgot class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog m-auto d-flex align-items-center h-100">
+    <div class="modal-content border border-3 border-primary">
+      <div class="modal-body">
+        <div>
+          <div>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="text-center">
+                  <p class="m-auto">
+                    <i class="fa fa-lock fa-4x" data-bs-dismiss="modal" #closBtn></i>
+                  </p>
+                  <h3 class="text-center my-3">Quên mật khẩu?</h3>
+                  <p class="m-1 text-danger">Vui lòng nhập email của bạn để đặt lại mật khẩu.</p>
+                  <div class="panel-body">
+                    <div class="loading-container">
+                      <div class="balls">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <form [formGroup]="formResetPass" method="post" class="m-auto" #freset (submit)="forgotPassword()"
+                          appFocusInvalidInput>
+                      <div class="form-group">
+                        <div class="input-group">
+                          <i class="fas fa-envelope"></i>
+                          <input class="input-box" placeholder="Email" class="form-control"  type="email" formControlName="email">
+                          <div *ngIf="email.invalid && (email.touched || freset.submitted)" class="text-danger message">
+                            <div *ngIf="email.errors?.required">
+                              Email không được để trống.
+                            </div>
+                            <div *ngIf="email.errors?.email">
+                              Email không hợp lệ.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <button type="submit" class="btn-send">Gửi email</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
