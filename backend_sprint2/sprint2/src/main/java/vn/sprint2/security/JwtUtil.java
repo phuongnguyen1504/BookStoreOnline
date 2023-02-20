@@ -12,6 +12,7 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
+    public String message = "";
     private static final long EXPIRE_DURATION = 5 * 60 * 1000L;
     public static final Logger LOGGER = LoggerFactory.getLogger(JwtUtil.class);
     @Value("${app.jwt.secret}")
@@ -31,14 +32,19 @@ public class JwtUtil {
             Jwts.parser().setSigningKey(this.SECRET_KEY.getBytes()).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException ex) {
+            message = "Liên kết đổi mật khẩu không hợp lệ.";
             LOGGER.error("Invalid JWT signature: {}", ex.getMessage());
         } catch (MalformedJwtException ex) {
+            message = "Liên kết đổi mật khẩu không hợp lệ.";
             LOGGER.error("Invalid JWT token: {}", ex.getMessage());
         } catch (ExpiredJwtException ex) {
+            message = "Liên kết đổi mật khẩu đã hết hiệu lực.";
             LOGGER.error("JWT token is expired: {}", ex.getMessage());
         } catch (UnsupportedJwtException ex) {
+            message = "Liên kết đổi mật khẩu không hợp lệ.";
             LOGGER.error("JWT token is unsupported: {}", ex.getMessage());
         } catch (IllegalArgumentException ex) {
+            message = "Liên kết đổi mật khẩu không hợp lệ.";
             LOGGER.error("JWT claims string is empty: {}", ex.getMessage());
         }
         return false;

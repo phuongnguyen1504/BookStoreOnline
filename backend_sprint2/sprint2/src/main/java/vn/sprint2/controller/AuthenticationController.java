@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import vn.sprint2.dto.CustomerDto;
+import vn.sprint2.dto.ResetPassRequest;
 import vn.sprint2.model.Account;
 import vn.sprint2.model.Cart;
 import vn.sprint2.model.Customer;
@@ -90,11 +91,16 @@ public class AuthenticationController {
                 account.setRoles(roles);
                 accountService.save(account);
             }
+            List<String> roles=new ArrayList<>();
+            roles.add("USER");
             Cart cart = new Cart();
             cart.setCustomer(customerService.findByUsername(customerDto.getAccount().getUsername()));
             cartService.save(cart);
-
-
+            String accessToken = this.jwtUtil.generateAccessToken(customerDto.getAccount().getUsername());
+            //trả về 1 đối tượng account accountService.findByUsername(myUserDetails.getUsername()) sau đó get để lấy thuộc tính
+            Long cart_id = customerService.findByUsername(customerDto.getAccount().getUsername()).getCart().getId();
+            JwtResponse jwtResponse = new JwtResponse(customerDto.getAccount().getUsername(), accessToken, roles, cart_id);
+            return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
         }
 
 
@@ -142,10 +148,26 @@ public class AuthenticationController {
         }
         Customer customer = customerOptional.get();
         String token = this.jwtUtil.generateAccessToken(customer.getAccount().getUsername());
-        String resetPasswordLink = "http://localhost:4200/authen/resetpassword/" + token;
+        String resetPasswordLink = "http://localhost:4200/resetpassword/" + token;
         if (emailService.sendEmail(email, resetPasswordLink)) {
             return new ResponseEntity<>(new ResponseMessage("Gửi email thành công"), HttpStatus.OK);
         }
         return new ResponseEntity<>(new ResponseMessage("Gửi email thất bại"), HttpStatus.BAD_REQUEST);
+    }
+    @PostMapping("/reset-password")
+    public ResponseEntity<ResponseMessage> resetPassword(@RequestBody ResetPassRequest request) {
+        if (!jwtUtil.validateAccessToken(request.getToken())) {
+            return new ResponseEntity<>(new ResponseMessage(jwtUtil.message), HttpStatus.BAD_REQUEST);
+        }
+        String username = jwtUtil.getUsernameFromToken(request.getToken());
+        Optional<Account> userOptional = accountService.findByUsername(username);
+        if (!userOptional.isPresent()) {
+            return new ResponseEntity<>(new ResponseMessage("Không tìm thấy tài khoản của bạn."), HttpStatus.BAD_REQUEST);
+        }
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            return new ResponseEntity<>(new ResponseMessage("Mật khẩu không trùng khớp."), HttpStatus.BAD_REQUEST);
+        }
+        accountService.updatePassword(userOptional.get(), request.getPassword());
+        return new ResponseEntity<>(new ResponseMessage("Đổi mật khẩu thành công."), HttpStatus.OK);
     }
 }

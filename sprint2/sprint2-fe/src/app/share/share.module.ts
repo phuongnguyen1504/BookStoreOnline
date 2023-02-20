@@ -8,15 +8,15 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './security/login/login.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { CartlistComponent } from './cartlist/cartlist.component';
-import { ForgotPasswordComponent } from './security/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './security/reset-password/reset-password.component';
 import { LoadingComponent } from './loading/loading.component';
 
 
 @NgModule({
-    declarations: [ShareComponent, HeaderComponent, FooterComponent, LoginComponent, CartlistComponent, ForgotPasswordComponent, LoadingComponent],
+    declarations: [ShareComponent, HeaderComponent, FooterComponent, LoginComponent, CartlistComponent, ResetPasswordComponent, LoadingComponent],
   exports: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,ResetPasswordComponent
   ],
     imports: [
         CommonModule,

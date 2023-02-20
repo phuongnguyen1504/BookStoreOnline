@@ -152,6 +152,7 @@ export class LoginComponent implements OnInit {
         },
         error => {
           this.loading=false;
+          this.closBtn.nativeElement.click();
           this.toastrService.warning(error.error.message, 'Thông báo', {
             timeOut: 2000,
             extendedTimeOut: 1500,

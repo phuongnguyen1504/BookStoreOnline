@@ -169,4 +169,12 @@ export class AuthService {
   forgotPassword(email): Observable<any> {
     return this.http.get(AUTH_API + '/forgot-password?email=' + email, this.httpOptions);
   }
+
+  resetPassword(resetPassRequest):Observable<any> {
+    return this.http.post(AUTH_API + '/reset-password', {
+      password: resetPassRequest.password,
+      confirmPassword: resetPassRequest.confirmPassword,
+      token: resetPassRequest.token
+    }, this.httpOptions);
+  }
 }

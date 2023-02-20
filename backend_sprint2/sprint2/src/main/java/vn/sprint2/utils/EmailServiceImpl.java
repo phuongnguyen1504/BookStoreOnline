@@ -47,7 +47,7 @@ public class EmailServiceImpl implements EmailService {
                     "                    <tr>\n" +
                     "                        <td style=\"text-align:center;\">\n" +
                     "                          <a href=\"http://localhost:4200\" title=\"logo\" target=\"_blank\">\n" +
-                    "                            <img width=\"60\" src=\"https://firebasestorage.googleapis.com/v0/b/a1221i1-farm.appspot.com/o/logoXoaPhong-image.png?alt=media&token=c878358d-3ad0-43f4-aeae-ece1f0435f8b\" " +
+                    "                            <img width=\"60\" src=\"https://png.pngtree.com/png-clipart/20220605/original/pngtree-open-book-logo-eps-png-free-download-png-image_7965241.png\" " +
                     "                            title=\"logo\" alt=\"logo\">\n" +
                     "                          </a>\n" +
                     "                        </td>\n" +
