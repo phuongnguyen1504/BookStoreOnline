@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Cartitem} from "../../model/cartitem";
 import {CartService} from "../../service/cart.service";
 import {TokenStorageService} from "../../service/token-storage.service";
@@ -15,11 +15,38 @@ export class CartlistComponent implements OnInit {
   cartItems: Cartitem[]=[];
   totalPrice=0;
   cartItem: Cartitem;
+  cod:boolean =true;
+  paypal:boolean=false;
+  paidFor: boolean=false;
 
   constructor(private cartService:CartService,private tokenStorageService:TokenStorageService, private authService:AuthService, private el:ElementRef, private toastrService: ToastrService) { }
-
+  @ViewChild('paypalRef',{static:true})
+  private paypalRef:ElementRef;
   ngOnInit(): void {
     this.getCartByUsername();
+    window.paypal.Buttons({
+      createOrder:(data,actions)=>{
+        return actions.order.create({
+          purchase_units:[
+            {
+              amount:{
+                currency_code:'USD',
+                value: this.totalPrice
+              }
+            }
+          ]
+        });
+      },
+      onApprove:async (data,actions)=>{
+        const order=await actions.order.capture();
+        this.paidFor=true;
+        console.log(order);
+      },
+      onError: err=>{
+        console.log(err);
+      }
+    }).render(this.paypalRef.nativeElement);
+
   }
 
 
@@ -99,6 +126,21 @@ export class CartlistComponent implements OnInit {
   }
 
   addShing(number: number) {
-    
+
+  }
+
+  selectPaypal() {
+    this.cod=false;
+    this.paypal=true;
+    console.log("paypal");
+
+
+  }
+
+  selectCod() {
+    this.cod=true;
+    this.paypal=false;
+    console.log("cod");
+    this.paypalRef.nativeElement.value='';
   }
 }
