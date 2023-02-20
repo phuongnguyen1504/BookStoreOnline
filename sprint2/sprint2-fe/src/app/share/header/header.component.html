@@ -95,6 +95,7 @@
                     <li><a href="blog.html">Chính sách khuyến mãi </a></li>
                     <li><a href="contact.html">Liên hệ </a></li>
                     <li><a href="shop.html">Quy định pháp lí</a></li>
+                    <li  [hidden]="['ADMIN'].indexOf(role) === -1"><a routerLink="/manager">Quản lý</a></li>
                   </ul>
                 </nav>
               </div>

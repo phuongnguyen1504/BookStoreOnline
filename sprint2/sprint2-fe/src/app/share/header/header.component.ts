@@ -42,7 +42,8 @@ export class HeaderComponent implements OnInit {
   private loadHeader() {
     if (this.tokenStorageService.getToken()) {
       this.listCart();
-      this.username = this.tokenStorageService.getUser().roles[0].name;
+      this.username = this.tokenStorageService.getUser().username;
+      this.role = this.tokenStorageService.getUser().roles[0].name;
       this.isLoggedIn = true;
       this.cartService.getNumberOfCart(this.tokenStorageService.getUser().username).subscribe(data=>{
         this.amountOfCart=data;
