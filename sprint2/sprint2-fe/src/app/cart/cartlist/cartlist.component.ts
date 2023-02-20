@@ -18,6 +18,8 @@ export class CartlistComponent implements OnInit {
   cod:boolean =true;
   paypal:boolean=false;
   paidFor: boolean=false;
+  standardShipping:boolean=false;
+  expressdShipping:boolean=false;
 
   constructor(private cartService:CartService,private tokenStorageService:TokenStorageService, private authService:AuthService, private el:ElementRef, private toastrService: ToastrService) { }
   @ViewChild('paypalRef',{static:true})
@@ -125,9 +127,7 @@ export class CartlistComponent implements OnInit {
     }
   }
 
-  addShing(number: number) {
 
-  }
 
   selectPaypal() {
     this.cod=false;
@@ -142,5 +142,25 @@ export class CartlistComponent implements OnInit {
     this.paypal=false;
     console.log("cod");
     this.paypalRef.nativeElement.value='';
+  }
+
+  standardShip(number: number) {
+    this.standardShipping=!this.standardShipping;
+    if (this.standardShipping){
+      this.totalPrice+=number;
+    }
+    else {
+      this.totalPrice-=number;
+    }
+  }
+
+  expressShip(number: number) {
+    this.expressdShipping=!this.expressdShipping;
+    if (this.expressdShipping){
+      this.totalPrice+=number;
+    }
+    else {
+      this.totalPrice-=number;
+    }
   }
 }

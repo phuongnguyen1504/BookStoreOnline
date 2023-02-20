@@ -138,8 +138,8 @@
                 <div class="total-shipping">
                   <h5>Tổng phí vận chuyển</h5>
                   <ul>
-                    <li><input type="checkbox" (click)="addShing(25000)"> Standard <span>25.000 đ</span></li>
-                    <li><input type="checkbox" (click)="addShing(50000)"> Express <span>50.000 đ</span></li>
+                    <li><input type="checkbox" (click)="standardShip(25000)"> Standard <span>25.000 đ</span></li>
+                    <li><input type="checkbox" (click)="expressShip(50000)"> Express <span>50.000 đ</span></li>
                   </ul>
                 </div>
                 <h4 class="grand-totall-title">Tổng thanh toán: <span>{{totalPrice | currency : 'VNĐ' : '' : '1.0-0'}} đ</span></h4>
