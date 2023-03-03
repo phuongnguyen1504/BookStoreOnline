@@ -1,0 +1,31 @@
+<!--<button class="open-button" (click)="openForm()">Chat</button>-->
+<div id="chat-circle" class="btn btn-raised" (click)="openForm()">
+  <div id="chat-overlay"></div>
+  <i class="material-icons">speaker_phone</i>
+</div>
+
+<div class="container" #myForm [ngClass]="formChat==true? 'show':'hide'">
+  <div class="box">
+    <span class="chat-box-toggle"><i class="material-icons" style="text-align: right" (click)="openForm()">X</i></span>
+    <div class="chat-list" #chatListContainer>
+      <ng-container *ngFor="let item of chatMessages">
+        <div class="chat-item"
+             [ngClass]="{'right' : item?.user?.id == human.id, 'left': item?.user?.id != human.id}">
+          <img id="avatar" [src]="item?.user?.profileImageUrl">
+          <p id="message-body">{{item?.message}}</p>
+        </div>
+      </ng-container>
+    </div>
+    <div class="chat-footer">
+      <input matInput id="chat-textarea" [(ngModel)]="chatInputMessage" required>
+      <button id="send-button" (click)="send()" [disabled]="chatInputMessage === ''">
+        send
+      </button>
+    </div>
+  </div>
+</div>
+<div class="caption">
+  <button id="clear-button" (click)="clearConversation()" >
+    clear conversation
+  </button>
+</div>
