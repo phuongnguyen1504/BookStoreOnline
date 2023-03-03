@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import vn.sprint2.security.JwtFilter;
 import vn.sprint2.security.MyUserDetailsServiceImpl;
 
@@ -52,7 +53,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers("/api/auth/**", "/api/book/**", "/api/category/**").permitAll()
-                .anyRequest().authenticated();
+                .and()
+                .authorizeRequests().antMatchers("/api/book/create").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
         http.exceptionHandling()
                 .authenticationEntryPoint(
                         (request, response, ex) -> {

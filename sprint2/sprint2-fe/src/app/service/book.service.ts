@@ -21,7 +21,7 @@ export class BookService {
   }
 
   create(book: Book): Observable<Book> {
-    return this.http.post<Book>(apiUrl, book);
+    return this.http.post<Book>(apiUrl+'/create', book);
   }
 
   update(id: number, book: Book): Observable<Book> {

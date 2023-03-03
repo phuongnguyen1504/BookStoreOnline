@@ -14,14 +14,22 @@
       <th scope="col">Năm phát hành</th>
       <th scope="col">Số lượng</th>
       <th scope="col">Giá</th>
+      <th scope="col">Hình ảnh</th>
+      <th colspan="2">Hành động</th>
+
     </tr>
     </thead>
     <tbody class="table-group-divider">
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+    <tr *ngFor="let book of books.content,index as i">
+      <th scope="row">{{i+1}}</th>
+      <td>{{book.category.name}}</td>
+      <td>{{book.name}}</td>
+      <td>{{book.yearPublish| date:"dd/MM/yyyy"}}</td>
+      <td>{{book.amount}}</td>
+      <td>{{book.price | currency : 'VNĐ' : '' : '1.0-0'}}</td>
+      <td><img src="{{book.img_url}}"></td>
+      <td scope="col"><i class="fa-solid fa-pen-to-square"></i></td>
+      <td scope="col"><i class="fa-regular fa-trash-can"></i></td>
     </tr>
 
 
