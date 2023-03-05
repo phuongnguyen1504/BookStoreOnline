@@ -11,10 +11,11 @@ import { CartlistComponent } from './cartlist/cartlist.component';
 import { ResetPasswordComponent } from './security/reset-password/reset-password.component';
 import { LoadingComponent } from './loading/loading.component';
 import { ChatbotComponent } from './chatbot/chatbot/chatbot.component';
+import { ChatComponent } from './chatbot/chat/chat.component';
 
 
 @NgModule({
-    declarations: [ShareComponent, HeaderComponent, FooterComponent, LoginComponent, CartlistComponent, ResetPasswordComponent, LoadingComponent, ChatbotComponent],
+    declarations: [ShareComponent, HeaderComponent, FooterComponent, LoginComponent, CartlistComponent, ResetPasswordComponent, LoadingComponent, ChatbotComponent, ChatComponent],
   exports: [
     HeaderComponent,
     FooterComponent, ResetPasswordComponent, ChatbotComponent

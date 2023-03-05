@@ -6,34 +6,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 
-@Document("usersession")
+@Document(collection = "users")
 public class UserSession {
     @Id
-    private String id;
-    private List<String> conversation;
+    private String userName;
 
-    public UserSession(String id, List conversation) {
-        this.id = id;
-        this.conversation = conversation;
+    public UserSession() {
     }
 
-    public void updateConversation(String newEntry) {
-        this.conversation.add(newEntry);
+    public UserSession(String userName) {
+        this.userName = userName;
     }
 
-    public String getId() {
-        return id;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public List<String> getConversation() {
-        return conversation;
-    }
-
-    public void setConversation(List<String> conversation) {
-        this.conversation = conversation;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

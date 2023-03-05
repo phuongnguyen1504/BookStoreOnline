@@ -9,6 +9,7 @@ import {NavigationEnd, Router} from "@angular/router";
 export class AppComponent {
   title = 'sprint2-fe';
   showHeader:boolean=true;
+  isAuthenticate:boolean=false;
   constructor(private router:Router) {
     router.events.subscribe(value => {
       if (value instanceof NavigationEnd){
@@ -19,5 +20,8 @@ export class AppComponent {
         }
       }
     })
+
   }
+
+
 }

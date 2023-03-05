@@ -11,6 +11,7 @@ export class TokenStorageService {
   constructor() { }
   logOut() {
     window.localStorage.clear();
+    window.sessionStorage.clear();
   }
   public saveTokenLocalStorage(token: string) {
     window.localStorage.removeItem(TOKEN_KEY);
