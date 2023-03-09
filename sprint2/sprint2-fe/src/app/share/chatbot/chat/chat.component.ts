@@ -5,6 +5,7 @@ import {Chat} from "../../../model/chatbot/chat";
 import {Message} from "../../../model/chatbot/message";
 import {ChatService} from "../../../service/chatbot/chat.service";
 import {UserService} from "../../../service/chatbot/user.service";
+import {TokenStorageService} from "../../../service/token-storage.service";
 
 
 @Component({
@@ -26,17 +27,16 @@ export class ChatComponent implements OnInit {
   chatId: any = sessionStorage.getItem('chatId');
   color = "";
   secondUserName = "";
-  public alluser: any = [];
-  check = sessionStorage.getItem('username');
+  check = this.tokenStorageService.getUser().username;
   timesRun = 0;
   timesRun2 = 0;
 
 
-  firstUserName = sessionStorage.getItem('username');
-  senderEmail = sessionStorage.getItem('username');
-  senderCheck = sessionStorage.getItem('username');
+  firstUserName = this.tokenStorageService.getUser().username;
+  senderEmail = this.tokenStorageService.getUser().username;
+  senderCheck = this.tokenStorageService.getUser().username;
 
-  constructor(private chatService: ChatService, private router: Router, private userService: UserService) {
+  constructor(private chatService: ChatService, private router: Router, private userService: UserService,private tokenStorageService: TokenStorageService) {
     this.chatForm = new FormGroup({
       replymessage: new FormControl()
     });
@@ -56,7 +56,7 @@ export class ChatComponent implements OnInit {
 
     let getByname = setInterval(() => {
       // For getting all the chat list whose ever is logged in.
-      this.chatService.getChatByFirstUserNameOrSecondUserName(sessionStorage.getItem('username')).subscribe(data => {
+      this.chatService.getChatByFirstUserNameOrSecondUserName(this.tokenStorageService.getUser().username).subscribe(data => {
         // console.log(data);
         this.chatData = data;
         this.chatList = this.chatData;
@@ -68,19 +68,7 @@ export class ChatComponent implements OnInit {
       }
     }, 1000);
 
-    let all = setInterval(() => {
 
-      this.userService.getAll().subscribe((data) => {
-        // console.log(data);
-
-        this.alluser = data;
-      })
-
-      this.timesRun += 1;
-      if (this.timesRun === 2) {
-        clearInterval(all);
-      }
-    }, 1000);
 
 
   }
@@ -148,14 +136,14 @@ export class ChatComponent implements OnInit {
 
 
   goToChat(username: any) {
-    this.chatService.getChatByFirstUserNameAndSecondUserName(username, sessionStorage.getItem("username")).subscribe(
+    this.chatService.getChatByFirstUserNameAndSecondUserName(username, this.tokenStorageService.getUser().username).subscribe(
       (data) => {
         this.chatId = data.chatId;
         sessionStorage.setItem("chatId", this.chatId);
       },
       (error) => {
         if (error.status == 404) {
-          this.chatObj.firstUserName = sessionStorage.getItem("username");
+          this.chatObj.firstUserName = this.tokenStorageService.getUser().username;
           this.chatObj.secondUserName = username;
           this.chatService.createChatRoom(this.chatObj).subscribe(
             (data) => {

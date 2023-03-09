@@ -1,4 +1,5 @@
 <!--<button class="open-button" (click)="openForm()">Chat</button>-->
+
 <div id="chat-circle" class="btn btn-raised" (click)="openForm()">
   <div id="chat-overlay"></div>
   <i class="fa-regular fa-message"></i>
@@ -7,8 +8,8 @@
 <div class="container" #myForm [ngClass]="formChat==true? 'show':'hide'">
   <div class="box">
     <span class="chat-box-toggle"><i class="material-icons" style="text-align: right" (click)="openForm()">X</i></span>
-    <div class="chat-list" #chatListContainer>
-      <ng-container *ngFor="let item of messageList">
+    <div class="chat-list" #chatListContainer [scrollTop]="chatListContainer.scrollHeight">
+      <ng-container *ngFor="let item of messageList" >
         <div class="chat-item"
              [ngClass]="{'right' : item?.senderEmail == firstUserName, 'left': item?.senderEmail != firstUserName}">
           <img id="avatar" [src]="item.senderEmail==firstUserName?human.profileImageUrl:bot.profileImageUrl">
@@ -25,8 +26,4 @@
     </div>
   </div>
 </div>
-<div class="caption">
-  <button id="clear-button" (click)="clearConversation()" >
-    clear conversation
-  </button>
-</div>
+

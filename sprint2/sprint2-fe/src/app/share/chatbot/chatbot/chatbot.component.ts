@@ -6,6 +6,7 @@ import {TokenStorageService} from "../../../service/token-storage.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Chat} from "../../../model/chatbot/chat";
 import {Message} from "../../../model/chatbot/message";
+import {interval} from "rxjs";
 
 @Component({
   selector: 'app-chatbot',
@@ -22,7 +23,7 @@ export class ChatbotComponent implements OnInit {
   chatData: any = [];
   public messageList: any = [];
   secondUserName = "";
-  interval:any;
+  intervals:any;
   constructor(private chatService: ChatService, private userService: UserService, private route: Router, private tokenStorageService: TokenStorageService) {
 
 
@@ -38,21 +39,17 @@ export class ChatbotComponent implements OnInit {
 
 
   ngOnInit() {
-    this.chatService.getChatById(sessionStorage.getItem('chatId')).subscribe(data => {
-      this.chatData = data;
-      this.messageList=this.chatData.messageList;
-    });
-  };
-    // if (localStorage.getItem('fakeUserId') === null) {
-    //   localStorage.setItem('fakeUserId', this.generateFakeId())
-    // } else {
-    //   // this.chatService.findAll().subscribe(data => {
-    //   //   if (data !== null) {
-    //   //     this.setConversation(data['conversation'])
-    //   //   }
-    //   // });
-    // }
 
+    this.intervals= setInterval(() => {
+        this.chatService.getChatById(sessionStorage.getItem('chatId')).subscribe(data => {
+          this.chatData = data;
+          this.messageList = this.chatData.messageList;
+          this.secondUserName = this.chatData.secondUserName;
+          this.firstUserName = this.chatData.firstUserName;
+        });
+      }, 1000);
+    clearInterval(this.intervals);
+  };
 
   bot = {
     id: 2,
@@ -71,10 +68,6 @@ export class ChatbotComponent implements OnInit {
 
   title = 'frontend';
 
-  ngAfterViewChecked() {
-
-    this.scrollToBottom()
-  }
 
   sendMessage() {
     //Push tin nhắn mới vào mongodb
@@ -89,73 +82,34 @@ export class ChatbotComponent implements OnInit {
       console.log(data);
       this.chatData = data;
       this.messageList = this.chatData.messageList;
+      this.secondUserName = this.chatData.secondUserName;
+      this.firstUserName = this.chatData.firstUserName;
 
     })
   }
-
-  send() {
-    this.chatMessages.push({
-      message: this.chatInputMessage,
-      user: this.human
-    });
-    // this.chatService.send(this.chatInputMessage).subscribe(data => {
-    //   this.receive(data);
-    // });
-    this.chatInputMessage = ""
-    this.scrollToBottom()
+  routeX() {
+    // this.router.navigateByUrl('/navbar/recommendation-service');
+    sessionStorage.clear();
+    // window.location.reload();
+    this.route.navigateByUrl('');
   }
 
-  receive(message: string) {
-    this.chatMessages.push({
-      message: message,
-      user: this.bot
-    });
-    this.scrollToBottom()
-  }
-
-  setConversation(conversation: any) {
-    for (let i = 0; i < conversation.length; i++) {
-      if (i % 2 === 0) {
-        this.chatMessages.push({
-          message: conversation[i],
-          user: this.human
-        });
-      } else {
-        this.chatMessages.push({
-          message: conversation[i],
-          user: this.bot
-        });
-      }
-    }
-  }
-
-  scrollToBottom() {
-    const maxScroll = this.list?.nativeElement.scrollHeight;
-    this.list?.nativeElement.scrollTo({top: maxScroll, behavior: 'smooth'});
-  }
-
-  generateFakeId(): string {
-    const current = new Date();
-    const timestamp = current.getTime();
-    return timestamp.toString()
-  }
-
-  clearConversation() {
-    localStorage.removeItem('fakeUserId')
-    localStorage.setItem('fakeUserId', this.generateFakeId())
-    // this.chatService.deleteConversation()
-    this.chatMessages = [
-      {
-        user: this.bot,
-        message: "hi, I'm an AI. You can start any conversation..."
-      },
-    ];
+  routeHome() {
+    this.route.navigateByUrl('');
   }
 
   openForm() {
     this.formChat = !this.formChat;
     if (this.formChat == true) {
       if (this.roles != "ADMIN") {
+        this.intervals= setInterval(() => {
+          this.chatService.getChatById(sessionStorage.getItem('chatId')).subscribe(data => {
+            this.chatData = data;
+            this.messageList = this.chatData.messageList;
+            this.secondUserName = this.chatData.secondUserName;
+            this.firstUserName = this.chatData.firstUserName;
+          });
+        }, 1000);
         this.chatService.getChatByFirstUserNameAndSecondUserName("phuong123@gmail.com", this.firstUserName).subscribe(data => {
             console.log(data);
             this.chatId = data[0].chatId;
@@ -175,24 +129,23 @@ export class ChatbotComponent implements OnInit {
               })
           }
         )
-        this.interval=setInterval(() => {
-          this.chatService.getChatById(sessionStorage.getItem('chatId')).subscribe(data => {
-            this.chatData = data;
-            if (this.chatData.messageList.length!=this.messageList.length){
-              const arr= this.chatData.messageList.slice(this.messageList.length-1);
-              arr.forEach((value)=>{
-                this.messageList.push(value);
-              })
-            }
-          });
-        }, 1000);
+
       } else {
+        this.chatService.getChatByFirstUserNameOrSecondUserName(this.firstUserName).subscribe(data=>{
+          console.log(data);
+          this.chatId = data[0].chatId;
+          sessionStorage.setItem("chatId", this.chatId);
+          sessionStorage.setItem("gotochat", "false");
+        })
+        this.formChat=false;
         this.route.navigateByUrl('/chat');
       }
     }
     else {
-      clearInterval(this.interval);
+      clearInterval(this.intervals);
+
     }
   }
+
 
 }

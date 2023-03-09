@@ -13,6 +13,7 @@ export const environment = {
   firebaseConfig : {
     apiKey: "AIzaSyCJQmu1QneFQyWt_9k8MWWJZGXL-uTG7fg",
     authDomain: "bookstore-9a26b.firebaseapp.com",
+    databaseURL: "https://bookstore-9a26b-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "bookstore-9a26b",
     storageBucket: "bookstore-9a26b.appspot.com",
     messagingSenderId: "119040611053",

@@ -61,7 +61,7 @@ export class BookComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    clearInterval();
     this.categoryService.findAll().subscribe(categories => {
       this.categories = categories;
     }, error => {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TokenStorageService} from '../../service/token-storage.service';
 import {ShareService} from '../../service/share.service';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {AuthService} from "../../service/auth/auth.service";
 import {CartService} from "../../service/cart.service";
 import {CategoryService} from "../../service/category.service";
@@ -20,11 +20,21 @@ export class HeaderComponent implements OnInit {
   visible: boolean;
   listCategory: any;
   formSearch: FormGroup;
+  messageButton=true;
   amountOfCart: number=0;
   constructor(private  tokenStorageService: TokenStorageService, private cartService:CartService,private categoryService: CategoryService,
               private shareService: ShareService, private route: Router, private authService: AuthService, private toastrService: ToastrService) {
     this.shareService.getClickEvent().subscribe(() => {
       this.loadHeader();
+      route.events.subscribe(value => {
+        if (value instanceof NavigationEnd){
+          if (value.url=='/manager'){
+            this.messageButton=false;
+          } else {
+            this.messageButton=true;
+          }
+        }
+      })
     });
   }
 
