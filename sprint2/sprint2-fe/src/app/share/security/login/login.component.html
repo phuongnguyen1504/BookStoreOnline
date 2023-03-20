@@ -12,7 +12,7 @@
       <form method="post" #flg="ngForm" [formGroup]="formSignUp" (ngSubmit)="signUp()" appFocusInvalidInput>
       <h1>Tạo tài khoản</h1>
       <div class="social-container">
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a class="social" (click)="FacebookAuth()"><i class="fab fa-facebook-f"></i></a>
         <a class="social" (click)="signInGoogle()"><i class="fab fa-google-plus-g"></i></a>
         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
       </div>
@@ -45,7 +45,7 @@
       <form method="post" #flg="ngForm" [formGroup]="formLogin" (ngSubmit)="login()" appFocusInvalidInput>
       <h1>Đăng nhập</h1>
       <div class="social-container">
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a class="social" (click)="FacebookAuth()"><i class="fab fa-facebook-f"></i></a>
         <a class="social" (click)="signInGoogle()"><i class="fab fa-google-plus-g"></i></a>
         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
       </div>

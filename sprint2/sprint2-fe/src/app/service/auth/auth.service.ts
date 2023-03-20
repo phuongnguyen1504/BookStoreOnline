@@ -1,5 +1,4 @@
 import {Injectable, NgZone} from '@angular/core';
-import {environment} from "../../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {JwtHelperService} from "@auth0/angular-jwt";
@@ -14,6 +13,9 @@ import {TokenStorageService} from "../token-storage.service";
 import {UserService} from "../user.service";
 import {ShareService} from "../share.service";
 import {ToastrService} from "ngx-toastr";
+import {environment} from "../../../environments/environment.prod";
+import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
+import firebase from 'firebase';
 
 const AUTH_API = environment.api_auth;
 
@@ -156,6 +158,13 @@ export class AuthService {
 
     });
   }
+  // Sign in with Facebook
+  FacebookAuth() {
+
+    return this.AuthLogin(new FacebookAuthProvider()).then((res: any) => {
+
+    });
+  }
 
 // Sign out
   SignOut() {
@@ -177,4 +186,5 @@ export class AuthService {
       token: resetPassRequest.token
     }, this.httpOptions);
   }
+
 }

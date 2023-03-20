@@ -14,35 +14,35 @@ export class TokenStorageService {
     window.sessionStorage.clear();
   }
   public saveTokenLocalStorage(token: string) {
-    window.localStorage.removeItem(TOKEN_KEY);
-    window.localStorage.setItem(TOKEN_KEY, token);
+    window.sessionStorage.removeItem(TOKEN_KEY);
+    window.sessionStorage.setItem(TOKEN_KEY, token);
 
   }
   public getToken(): string {
-     console.log(localStorage.getItem(TOKEN_KEY));
-     return localStorage.getItem(TOKEN_KEY);
+     console.log(sessionStorage.getItem(TOKEN_KEY));
+     return sessionStorage.getItem(TOKEN_KEY);
   }
   public saveUserLocalStorage(user) {
-    window.localStorage.removeItem(USER_KEY);
-    window.localStorage.setItem(USER_KEY, JSON.stringify(user));
+    window.sessionStorage.removeItem(USER_KEY);
+    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   }
   public getUser() {
-    return JSON.parse(localStorage.getItem(USER_KEY));
+    return JSON.parse(sessionStorage.getItem(USER_KEY));
   }
 
   isLogin() {
-    return localStorage.getItem(LOGIN_KEY);
+    return sessionStorage.getItem(LOGIN_KEY);
   }
 
   saveCartIdSession(cartId: any) {
-    window.localStorage.removeItem(CART_ID);
-    window.localStorage.setItem(CART_ID,cartId);
+    window.sessionStorage.removeItem(CART_ID);
+    window.sessionStorage.setItem(CART_ID,cartId);
 
   }
   getCartId() {
-    return Number.parseInt(window.localStorage.getItem(CART_ID));
+    return Number.parseInt(window.sessionStorage.getItem(CART_ID));
   }
   saveLogin() {
-    window.localStorage.setItem(LOGIN_KEY, String(true));
+    window.sessionStorage.setItem(LOGIN_KEY, String(true));
   }
 }

@@ -7,7 +7,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class UserService {
-  baseUrl="http://localhost:8080/chat/user";
+  baseUrl="http://store.ap-southeast-1.elasticbeanstalk.com/chat/user";
   constructor(private httpClient:HttpClient) { }
   getAll(){
     return this.httpClient.get<User[]>(this.baseUrl+"/getall");

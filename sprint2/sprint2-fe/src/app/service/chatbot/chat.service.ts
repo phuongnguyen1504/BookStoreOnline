@@ -8,7 +8,7 @@ import {Chat} from "../../model/chatbot/chat";
   providedIn: 'root'
 })
 export class ChatService {
-  baseUrl="http://localhost:8080/chats";
+  baseUrl="http://store.ap-southeast-1.elasticbeanstalk.com/chats";
   constructor(private httpClient:HttpClient) {
 
   }

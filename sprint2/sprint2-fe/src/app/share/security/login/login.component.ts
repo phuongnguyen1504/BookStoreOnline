@@ -137,6 +137,11 @@ export class LoginComponent implements OnInit {
 
     this.loading=false;
   }
+  FacebookAuth() {
+    this.loading=true;
+    this.authService.FacebookAuth();
+    this.loading=false;
+  }
   forgotPassword() {
     if (this.formResetPass.valid) {
       this.loading=true;

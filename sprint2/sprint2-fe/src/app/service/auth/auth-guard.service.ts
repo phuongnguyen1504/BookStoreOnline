@@ -13,13 +13,13 @@ export class AuthGuardService {
               private router: Router,
               private tokenStorageService: TokenStorageService,
               private shareService: ShareService) {}
-  canActivate(): boolean {
-    if (!this.auth.isAuthenticated()) {
-      this.shareService.sendClickEvent();
-      this.tokenStorageService.logOut();
-      this.router.navigateByUrl('/authentication');
-      return false;
-    }
-    return true;
-  }
+  // canActivate(): boolean {
+  //   if (!this.auth.isAuthenticated()) {
+  //     this.shareService.sendClickEvent();
+  //     this.tokenStorageService.logOut();
+  //     this.router.navigateByUrl('/login');
+  //     return false;
+  //   }
+  //   return true;
+  // }
 }

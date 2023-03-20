@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {environment} from "../../environments/environment";
+
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Book} from "../model/book";
+import {environment} from "../../environments/environment.prod";
 const apiUrl=environment.api_book;
 @Injectable({
   providedIn: 'root'
