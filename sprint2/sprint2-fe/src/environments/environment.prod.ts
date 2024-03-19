@@ -30,13 +30,13 @@ export const environment = {
   cart_api: 'http://localhost:8080/api/cart',
   category_api: 'http://localhost:8080/api/category',
   firebaseConfig : {
-    apiKey: "AIzaSyCJQmu1QneFQyWt_9k8MWWJZGXL-uTG7fg",
+    apiKey: "AIzaSyCJQmu1QneFQyWt_9GXL-uTG7fg",
     authDomain: "bookstore-9a26b.firebaseapp.com",
-    databaseURL: "https://bookstore-9a26b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    databaseURL: "https://bookstore-9a26b-defaul-southeast1.firebasedatabase.app",
     projectId: "bookstore-9a26b",
     storageBucket: "bookstore-9a26b.appspot.com",
-    messagingSenderId: "119040611053",
-    appId: "1:119040611053:web:71835dd1221c3ec4bc72e4",
+    messagingSenderId: "11904061053",
+    appId: "1:119040611053:web:71221c3ec4bc72e4",
     measurementId: "G-E8CTPZE947"
   },
   dialogflow: {
