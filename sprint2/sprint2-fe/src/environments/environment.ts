@@ -11,17 +11,17 @@ export const environment = {
   cart_api: 'http://localhost:8080/api/cart',
   category_api: 'http://localhost:8080/api/category',
   firebaseConfig : {
-    apiKey: "AIzaSyCJQmu1QneFQyWt_9k8MWWJZGXL-uTG7fg",
+    apiKey: "AIzaSyCJQmu1QneFQyWt_9k8MWWJZGXL-uT",
     authDomain: "bookstore-9a26b.firebaseapp.com",
-    databaseURL: "https://bookstore-9a26b-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "bookstore-9a26b",
-    storageBucket: "bookstore-9a26b.appspot.com",
-    messagingSenderId: "119040611053",
-    appId: "1:119040611053:web:71835dd1221c3ec4bc72e4",
-    measurementId: "G-E8CTPZE947"
+    databaseURL: "https://bookstore-9a26t-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "bookstore-9a26",
+    storageBucket: "bookstore.appspot.com",
+    messagingSenderId: "11904061103",
+    appId: "1:119040611053:web:7183dd1221c3ec4bc72e4",
+    measurementId: "G-E8CPZE947"
   },
   dialogflow: {
-    angularBot: '1cb32c3d-17eb-4fc0-a4db-f6fb949a45c4'
+    angularBot: '1cb32c3d-17eb-4fc0-a4d-ffb949a45c4'
   }
 };
 
